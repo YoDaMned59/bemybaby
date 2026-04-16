@@ -1,0 +1,22 @@
+body {
+    font-family: Arial;
+    padding: 20px;
+  }
+  
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    gap: 20px;
+    background: white;
+  }
+  
+  .progress {
+    height: 10px;
+    background: #eee;
+  }
+  
+  .fill {
+    height: 10px;
+    background: pink;
+  }
