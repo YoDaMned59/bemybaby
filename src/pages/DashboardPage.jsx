@@ -1,17 +1,13 @@
 import useLocalStorage from "../hooks/useLocalStorage";
 import { getPregnancyWeek } from "../utils/pregnancy";
+import { getTodayTasks } from "../utils/todayTasks";
 import "./DashboardPage.css";
 
 export default function DashboardPage() {
   const [profile] = useLocalStorage("bmb-profile", { name: "", dueDate: "" });
 
   const week = getPregnancyWeek(profile.dueDate);
-
-  const tasks = [
-    "Préparer la valise maternité",
-    "Faire la liste bébé",
-    "Vérifier les papiers",
-  ];
+  const tasks = getTodayTasks(week);
 
   return (
     <div className="dashboard-page">
