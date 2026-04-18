@@ -1,19 +1,15 @@
-import { writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Jimp } from "jimp";
+import sharp from "sharp";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const publicDir = join(__dirname, "..", "public");
-/** Couleur primaire #8c6adf (ARGB pour Jimp) */
-const color = 0xff8c6adf;
+const svgPath = join(publicDir, "pwa-icon.svg");
 
-async function writeSquare(size, filename) {
-  const image = new Jimp({ width: size, height: size, color });
-  const buffer = await image.getBuffer("image/png");
-  await writeFile(join(publicDir, filename), buffer);
-}
+const svgBuffer = await readFile(svgPath);
 
-await writeSquare(192, "pwa-192.png");
-await writeSquare(512, "pwa-512.png");
-console.log("Icônes PWA écrites : public/pwa-192.png, public/pwa-512.png");
+await sharp(svgBuffer).resize(192, 192).png().toFile(join(publicDir, "pwa-192.png"));
+await sharp(svgBuffer).resize(512, 512).png().toFile(join(publicDir, "pwa-512.png"));
+
+console.log("Icônes PWA générées depuis pwa-icon.svg → pwa-192.png, pwa-512.png");

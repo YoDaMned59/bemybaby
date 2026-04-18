@@ -1,7 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#8c6adf"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="BeMyBaby">
+  <defs>
+    <linearGradient id="bmb-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9b7df0"/>
+      <stop offset="55%" stop-color="#8c6adf"/>
+      <stop offset="100%" stop-color="#6b4fc4"/>
+    </linearGradient>
+    <linearGradient id="bmb-heart" x1="30%" y1="20%" x2="70%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#fde8df"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bmb-bg)"/>
+  <rect
+    x="40"
+    y="40"
+    width="432"
+    height="432"
+    rx="88"
+    fill="none"
+    stroke="#ffffff"
+    stroke-opacity="0.2"
+    stroke-width="6"
+  />
+  <g transform="translate(256 268) scale(16.5) translate(-12 -10.5)">
+    <path
+      fill="url(#bmb-heart)"
+      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+    />
+  </g>
+  <!-- Petit éclat (détail visible sur l’icône 512) -->
   <path
-    fill="#fffdf8"
-    d="M256 420c-88-76-152-132-152-208 0-56 44-100 100-100 32 0 62 16 80 42 18-26 48-42 80-42 56 0 100 44 100 100 0 76-64 132-152 208l-12 10-12-10z"
+    fill="#fffefb"
+    fill-opacity="0.55"
+    d="M388 132c0-4 8-4 8 0v18l16-9c3-2 6 2 4 5l-16 9 16 9c2 3-1 7-4 5l-16-9v18c0 4-8 4-8 0v-18l-16 9c-3 2-6-2-4-5l16-9-16-9c-2-3 1-7 4-5l16 9v-18z"
   />
 </svg>

@@ -98,7 +98,7 @@ export default function DashboardPwaInstall() {
           </p>
           {!deferredPrompt ? (
             <p className="dashboard-pwa-install-note">
-              Si le bouton vert n’apparaît pas, Chrome peut proposer l’installation
+              Si le bouton d’installation n’apparaît pas, Chrome peut proposer l’installation
               seulement après une courte utilisation : navigue un peu dans l’app puis
               réessaie.
             </p>
