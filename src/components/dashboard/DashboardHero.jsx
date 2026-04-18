@@ -4,9 +4,9 @@ export default function DashboardHero({ firstName }) {
       <span className="dashboard-brand">BEMYBABY</span>
       <h1>Bonjour {firstName} 👋</h1>
       <p>
-        Tes <strong>listes</strong> et tes <strong>« déjà fait »</strong> au même
-        endroit sur le téléphone — sans jongler entre Excel, notes et plusieurs
-        applis.
+        Toutes tes <strong>listes</strong> et ce que tu as <strong>déjà fait</strong>{" "}
+        sont réunis ici, sur ton téléphone — sans jongler entre un tableur, des notes
+        et plusieurs applications.
       </p>
     </section>
   );

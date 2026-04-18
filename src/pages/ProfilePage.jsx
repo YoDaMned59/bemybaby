@@ -18,7 +18,7 @@ export default function ProfilePage() {
         onBack={() => navigate(-1)}
         brandClassName="profile-brand"
         title="Mon profil"
-        subtitle="Tes infos servent à personnaliser les listes et rappels — tout reste sur cet appareil pour l’instant."
+        subtitle="Prénom et date prévue permettent d’adapter les rappels et l’affichage de ta grossesse. Tout est enregistré sur cet appareil pour le moment."
       />
 
       <ProfileForm

@@ -3,11 +3,11 @@ export default function DashboardDailyTip() {
     <section className="dashboard-section">
       <h2>Conseil du jour</h2>
       <p className="dashboard-tip">
-        Pense à garder au même endroit les documents utiles (maternité, sortie,
-        démarches). Pour les démarches officielles, garde les{" "}
-        <strong>sites institutionnels</strong> (Ameli, CAF…) en favoris dans ton
-        navigateur : BeMyBaby te aide à <strong>cocher</strong>, pas à remplacer
-        ces outils.
+        Rassemble les papiers utiles (maternité, sortie, démarches) dans un même
+        dossier ou tiroir. Pour les démarches en ligne, passe toujours par les{" "}
+        <strong>sites officiels</strong> (Ameli, CAF, etc.) : tu peux les mettre en
+        favori dans ton navigateur. BeMyBaby t’aide à <strong>suivre tes listes</strong>{" "}
+        ; il ne remplace pas une démarche sur un site administratif.
       </p>
     </section>
   );

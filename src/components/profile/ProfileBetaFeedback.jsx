@@ -12,8 +12,8 @@ export default function ProfileBetaFeedback() {
       {action ? (
         <>
           <p className="profile-info-lead">
-            Cette version est en test : un retour, même court, nous aide à prioriser
-            la suite (listes, clarté, bugs…).
+            Cette version est en phase de test. Un retour, même court, nous aide à
+            corriger les bugs et à décider quoi améliorer en priorité.
           </p>
           <a
             href={action.href}
@@ -28,15 +28,16 @@ export default function ProfileBetaFeedback() {
       ) : (
         <>
           <p className="profile-info-lead">
-            Cette version est en test : utilise le <strong>lien ou l’adresse</strong>{" "}
-            communiqué·e avec ton invitation à la bêta pour nous envoyer un retour.
+            Cette version est en phase de test. Pour nous écrire, utilise le{" "}
+            <strong>lien ou l’adresse e-mail</strong> indiqués dans le message ou
+            l’invitation qui t’ont donné accès à la bêta.
           </p>
           {import.meta.env.DEV ? (
             <p className="profile-info-lead profile-info-lead--muted">
-              En local : définis <strong>VITE_FEEDBACK_URL</strong> (formulaire) ou{" "}
-              <strong>VITE_FEEDBACK_EMAIL</strong> dans un fichier{" "}
-              <code className="profile-info-code">.env</code> (voir{" "}
-              <code className="profile-info-code">.env.example</code>).
+              En développement : ajoute <strong>VITE_FEEDBACK_URL</strong> (lien vers
+              un formulaire) ou <strong>VITE_FEEDBACK_EMAIL</strong> dans un fichier{" "}
+              <code className="profile-info-code">.env</code> — voir{" "}
+              <code className="profile-info-code">.env.example</code>.
             </p>
           ) : null}
         </>

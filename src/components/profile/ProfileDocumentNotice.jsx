@@ -7,26 +7,26 @@ export default function ProfileDocumentNotice() {
 
       <ul className="profile-info-list">
         <li>
-          Tout est enregistré <strong>localement dans ton navigateur</strong> sur
-          cet appareil (pas de compte cloud BeMyBaby pour l’instant).
+          Tout est enregistré <strong>localement dans ton navigateur</strong> sur cet
+          appareil. Il n’y a pas encore de compte cloud BeMyBaby.
         </li>
         <li>
           Si tu <strong>effaces les données du site</strong>, si tu changes de
-          navigateur ou de téléphone, tu peux <strong>perdre</strong> ton profil et
-          tes coches.
+          navigateur ou de téléphone, tu risques de <strong>perdre</strong> ton profil
+          et l’état de tes cases à cocher.
         </li>
         <li>
-          Pour les démarches officielles (Ameli, CAF, maternité…), utilise les{" "}
-          <strong>sites et professionnels habilités</strong> : BeMyBaby ne les
-          remplace pas.
+          Pour les démarches officielles (Assurance maladie, CAF, maternité, etc.),
+          passe par les <strong>sites et interlocuteurs prévus</strong> : BeMyBaby ne
+          remplace pas ces démarches.
         </li>
       </ul>
 
       <p className="profile-info-disclaimer">
-        BeMyBaby propose des <strong>listes et rappels à titre informatif</strong>{" "}
-        pour t’aider à t’organiser. En cas de doute ou urgence médicale, contacte{" "}
-        <strong>un professionnel de santé</strong> ou le <strong>15</strong> (SAMU)
-        / <strong>114</strong> (santé mentale) selon la situation.
+        BeMyBaby propose des <strong>listes et des rappels à titre informatif</strong>{" "}
+        pour t’aider à t’organiser. En cas de doute sur ta santé ou celle de ton
+        bébé, ou en cas d’urgence, contacte <strong>un professionnel de santé</strong>{" "}
+        ou le <strong>15</strong> (SAMU — urgence vitale immédiate).
       </p>
     </section>
   );
