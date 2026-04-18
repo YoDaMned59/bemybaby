@@ -24,12 +24,26 @@ function markInstallBannerDismissed() {
   writeStorage(PWA_INSTALLED_KEY, true);
 }
 
-function isLikelyIOS() {
+/**
+ * iPhone / iPod / iPad classique (UA explicite), ou appareil tactile « type Mac » :
+ * iPadOS en mode bureau et iPhone « version bureau du site » annoncent souvent
+ * Macintosh + maxTouchPoints > 1 sans chaîne « iPad » / « iPhone » dans l’UA.
+ */
+function isLikelyAppleTouchDevice() {
   if (typeof navigator === "undefined") {
     return false;
   }
 
-  return /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const ua = navigator.userAgent || "";
+  if (/iPhone|iPad|iPod/i.test(ua)) {
+    return true;
+  }
+
+  const platform = navigator.platform || "";
+  const touchPoints =
+    typeof navigator.maxTouchPoints === "number" ? navigator.maxTouchPoints : 0;
+
+  return platform === "MacIntel" && touchPoints > 1;
 }
 
 function computeBannerHidden() {
@@ -45,9 +59,9 @@ export default function DashboardPwaInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [iosHelpOpen, setIosHelpOpen] = useState(false);
 
-  const ios = isLikelyIOS();
+  const isAppleTouch = isLikelyAppleTouchDevice();
   const showChromeInstall = Boolean(deferredPrompt);
-  const showIosSteps = ios && !deferredPrompt;
+  const showIosSteps = isAppleTouch && !deferredPrompt;
 
   useEffect(() => {
     function refreshHidden() {
@@ -193,7 +207,8 @@ export default function DashboardPwaInstall() {
               <ol>
                 <li>
                   Touche l’icône <strong>Partager</strong> (carré avec une flèche vers le
-                  haut), en bas de l’écran sur iPhone.
+                  haut) : en bas sur la plupart des iPhone, dans la barre d’outils sur
+                  iPad.
                 </li>
                 <li>
                   Fais défiler la ligne d’actions puis touche{" "}
