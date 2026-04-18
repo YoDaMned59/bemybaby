@@ -18,7 +18,7 @@ export default function ProfilePage() {
         onBack={() => navigate(-1)}
         brandClassName="profile-brand"
         title="Mon profil"
-        subtitle="Prénom et date prévue permettent d’adapter les rappels et l’affichage de ta grossesse. Tout est enregistré sur cet appareil pour le moment."
+        subtitle="Pour le MVP, seuls le prénom et la date prévue sont demandés : ils servent aux rappels et à l’affichage de ta grossesse. Tout reste sur cet appareil."
       />
 
       <ProfileForm

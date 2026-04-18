@@ -17,8 +17,6 @@ export function useProfile() {
     formattedDueDate,
     currentWeek,
     hasDueDate,
-    age: profile.age,
-    pregnancyType: profile.pregnancyType,
     isProfileComplete: Boolean(profile.firstName.trim() && profile.dueDate),
   };
 }

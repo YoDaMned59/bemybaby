@@ -1,8 +1,6 @@
 export const EMPTY_PROFILE = {
   firstName: "",
   dueDate: "",
-  age: "",
-  pregnancyType: "",
 };
 
 export function normalizeProfileInput(value) {
@@ -14,11 +12,5 @@ export function normalizeProfileInput(value) {
     firstName:
       typeof value.firstName === "string" ? value.firstName : "",
     dueDate: typeof value.dueDate === "string" ? value.dueDate : "",
-    age:
-      typeof value.age === "string" || typeof value.age === "number"
-        ? String(value.age)
-        : "",
-    pregnancyType:
-      typeof value.pregnancyType === "string" ? value.pregnancyType : "",
   };
 }

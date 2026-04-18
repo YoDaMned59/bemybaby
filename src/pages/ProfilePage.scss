@@ -85,53 +85,6 @@
   }
 }
 
-.profile-fieldset {
-  margin: 0 0 16px;
-  padding: 0;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  legend {
-    margin-bottom: 10px;
-    padding: 0;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-main);
-  }
-}
-
-.profile-radio {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border: 1px solid #ebd8d2;
-  border-radius: 14px;
-  background: #fffaf7;
-  cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease,
-    transform 0.15s ease;
-
-  &:hover {
-    border-color: #efc7ba;
-    background: #fff3ee;
-  }
-
-  input {
-    margin: 0;
-    accent-color: var(--primary-strong);
-    flex-shrink: 0;
-  }
-
-  span {
-    font-size: 14px;
-    line-height: 1.4;
-    color: var(--text-main);
-  }
-}
-
 .profile-save-button {
   width: 100%;
   border: none;
