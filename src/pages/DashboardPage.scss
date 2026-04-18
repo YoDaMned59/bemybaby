@@ -439,6 +439,9 @@
 
   .dashboard-pwa-install-actions {
     margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
 
   .dashboard-pwa-install-button {
@@ -458,6 +461,39 @@
   .dashboard-pwa-install-button:focus-visible {
     outline: 2px solid var(--primary-strong);
     outline-offset: 2px;
+  }
+
+  .dashboard-pwa-install-ios-panel {
+    margin-top: 12px;
+    padding: 14px 14px 12px;
+    border-radius: var(--radius-md);
+    background: var(--primary-soft);
+    border: 1px solid var(--primary-soft-hover);
+
+    ol {
+      margin: 0;
+      padding-left: 1.25rem;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-main);
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    li:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .dashboard-pwa-install-ios-note {
+    margin: 12px 0 0;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-muted);
   }
 }
 

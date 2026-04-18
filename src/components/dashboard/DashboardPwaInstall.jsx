@@ -24,6 +24,14 @@ function markInstallBannerDismissed() {
   writeStorage(PWA_INSTALLED_KEY, true);
 }
 
+function isLikelyIOS() {
+  if (typeof navigator === "undefined") {
+    return false;
+  }
+
+  return /iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+
 function computeBannerHidden() {
   if (typeof window === "undefined") {
     return false;
@@ -35,6 +43,11 @@ function computeBannerHidden() {
 export default function DashboardPwaInstall() {
   const [bannerHidden, setBannerHidden] = useState(computeBannerHidden);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [iosHelpOpen, setIosHelpOpen] = useState(false);
+
+  const ios = isLikelyIOS();
+  const showChromeInstall = Boolean(deferredPrompt);
+  const showIosSteps = ios && !deferredPrompt;
 
   useEffect(() => {
     function refreshHidden() {
@@ -130,11 +143,21 @@ export default function DashboardPwaInstall() {
       </div>
 
       <p className="dashboard-pwa-install-lead">
-        Ajoute l’app sur ton écran d’accueil pour un accès plus rapide (comme une
-        application classique).
+        {showIosSteps ? (
+          <>
+            Sous <strong>Safari</strong>, il n’y a pas de bouton d’installation automatique :
+            Apple impose de passer par le menu Partage. Utilise le bouton ci-dessous pour
+            afficher les étapes.
+          </>
+        ) : (
+          <>
+            Ajoute l’app sur ton écran d’accueil pour un accès plus rapide (comme une
+            application classique).
+          </>
+        )}
       </p>
 
-      {deferredPrompt ? (
+      {showChromeInstall ? (
         <div className="dashboard-pwa-install-actions">
           <button
             type="button"
@@ -143,6 +166,50 @@ export default function DashboardPwaInstall() {
           >
             Installer sur l’écran d’accueil
           </button>
+        </div>
+      ) : null}
+
+      {showIosSteps ? (
+        <div className="dashboard-pwa-install-actions">
+          <button
+            type="button"
+            className="dashboard-pwa-install-button"
+            onClick={() => setIosHelpOpen((open) => !open)}
+            aria-expanded={iosHelpOpen}
+            aria-controls="pwa-ios-steps"
+          >
+            {iosHelpOpen
+              ? "Masquer les étapes Safari"
+              : "Voir les étapes pour l’écran d’accueil"}
+          </button>
+
+          {iosHelpOpen ? (
+            <div
+              id="pwa-ios-steps"
+              className="dashboard-pwa-install-ios-panel"
+              role="region"
+              aria-label="Étapes Safari"
+            >
+              <ol>
+                <li>
+                  Touche l’icône <strong>Partager</strong> (carré avec une flèche vers le
+                  haut), en bas de l’écran sur iPhone.
+                </li>
+                <li>
+                  Fais défiler la ligne d’actions puis touche{" "}
+                  <strong>« Sur l’écran d’accueil »</strong>.
+                </li>
+                <li>
+                  Valide le nom « BeMyBaby » puis <strong>Ajouter</strong>.
+                </li>
+              </ol>
+              <p className="dashboard-pwa-install-ios-note">
+                Si tu ne vois pas « Sur l’écran d’accueil », ouvre bien le site dans{" "}
+                <strong>Safari</strong> (pas uniquement dans un aperçu intégré d’une autre
+                app).
+              </p>
+            </div>
+          ) : null}
         </div>
       ) : null}
     </section>
