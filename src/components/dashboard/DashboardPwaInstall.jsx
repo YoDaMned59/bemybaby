@@ -24,14 +24,6 @@ function markInstallBannerDismissed() {
   writeStorage(PWA_INSTALLED_KEY, true);
 }
 
-function isLikelyIOS() {
-  if (typeof navigator === "undefined") {
-    return false;
-  }
-
-  return /iphone|ipad|ipod/i.test(navigator.userAgent);
-}
-
 function computeBannerHidden() {
   if (typeof window === "undefined") {
     return false;
@@ -43,7 +35,6 @@ function computeBannerHidden() {
 export default function DashboardPwaInstall() {
   const [bannerHidden, setBannerHidden] = useState(computeBannerHidden);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const ios = isLikelyIOS();
 
   useEffect(() => {
     function refreshHidden() {
@@ -154,33 +145,6 @@ export default function DashboardPwaInstall() {
           </button>
         </div>
       ) : null}
-
-      {ios ? (
-        <div className="dashboard-pwa-install-hint">
-          <strong>iPhone / iPad (Safari)</strong>
-          <p>
-            Touche l’icône <span className="dashboard-pwa-share">Partager</span>{" "}
-            (carré avec flèche vers le haut), puis{" "}
-            <strong>« Sur l’écran d’accueil »</strong>.
-          </p>
-        </div>
-      ) : (
-        <div className="dashboard-pwa-install-hint">
-          <strong>Android (Chrome)</strong>
-          <p>
-            Ouvre le menu <strong>⋮</strong> en haut à droite, puis cherche{" "}
-            <strong>« Installer l’application »</strong> ou{" "}
-            <strong>« Ajouter à l’écran d’accueil »</strong>.
-          </p>
-          {!deferredPrompt ? (
-            <p className="dashboard-pwa-install-note">
-              Si le bouton d’installation n’apparaît pas, Chrome peut proposer l’installation
-              seulement après une courte utilisation : navigue un peu dans l’app puis
-              réessaie.
-            </p>
-          ) : null}
-        </div>
-      )}
     </section>
   );
 }

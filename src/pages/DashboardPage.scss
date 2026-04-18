@@ -438,7 +438,7 @@
   }
 
   .dashboard-pwa-install-actions {
-    margin-bottom: 14px;
+    margin-bottom: 0;
   }
 
   .dashboard-pwa-install-button {
@@ -458,37 +458,6 @@
   .dashboard-pwa-install-button:focus-visible {
     outline: 2px solid var(--primary-strong);
     outline-offset: 2px;
-  }
-
-  .dashboard-pwa-install-hint {
-    padding: 12px 14px;
-    border-radius: var(--radius-md);
-    background: var(--primary-soft);
-    border: 1px solid var(--primary-soft-hover);
-    font-size: 14px;
-    line-height: 1.5;
-    color: var(--text-main);
-
-    strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 13px;
-      color: var(--primary-strong);
-    }
-
-    p {
-      margin: 0;
-    }
-  }
-
-  .dashboard-pwa-share {
-    white-space: nowrap;
-  }
-
-  .dashboard-pwa-install-note {
-    margin-top: 10px !important;
-    font-size: 13px;
-    color: var(--text-muted);
   }
 }
 
