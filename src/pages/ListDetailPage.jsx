@@ -1,141 +1,51 @@
-import { useParams } from "react-router-dom";
-import { useState } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { babyChecklist } from "../data/babyChecklist";
-import { maternityBagChecklist } from "../data/maternityBagChecklist";
-import { adminChecklist } from "../data/adminChecklist";
-import { getProgress } from "../utils/checklist";
-import "./ListDetailPage.css";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import AppPage from "../components/page/AppPage";
+import StackedPageHeader from "../components/page/StackedPageHeader";
+import ChecklistProgressCard from "../components/list-detail/ChecklistProgressCard";
+import ChecklistCategoryGroups from "../components/list-detail/ChecklistCategoryGroups";
+import ListDetailNotFound from "../components/list-detail/ListDetailNotFound";
+import { useChecklistDetail } from "../hooks/useChecklistDetail";
+import "./ListDetailPage.scss";
 
 export default function ListDetailPage() {
+  const navigate = useNavigate();
   const { listId } = useParams();
+  const location = useLocation();
 
-  const [baby, setBaby] = useLocalStorage("bmb-list-baby", babyChecklist);
-  const [bag, setBag] = useLocalStorage("bmb-list-bag", maternityBagChecklist);
-  const [admin, setAdmin] = useLocalStorage("bmb-list-admin", adminChecklist);
+  const {
+    listConfig,
+    progress,
+    groupedItems,
+    expandedGroups,
+    focusedItemId,
+    itemRefs,
+    handleToggleItem,
+    toggleGroup,
+  } = useChecklistDetail(listId, location.search);
 
-  let data = baby;
-  let setData = setBaby;
-  let title = "Liste bébé";
-
-  if (listId === "bag") {
-    data = bag;
-    setData = setBag;
-    title = "Valise maternité";
-  }
-
-  if (listId === "admin") {
-    data = admin;
-    setData = setAdmin;
-    title = "Démarches administratives";
-  }
-
-  const progress = getProgress(data);
-  const [newItems, setNewItems] = useState({});
-
-  function toggle(id) {
-    const updated = data.map((section) => ({
-      ...section,
-      items: section.items.map((item) =>
-        item.id === id ? { ...item, checked: !item.checked } : item
-      ),
-    }));
-    setData(updated);
-  }
-
-  function addItem(category) {
-    const label = (newItems[category] || "").trim();
-    if (!label) return;
-
-    const updated = data.map((section) =>
-      section.category === category
-        ? {
-            ...section,
-            items: [
-              ...section.items,
-              {
-                id: Date.now(),
-                label,
-                checked: false,
-              },
-            ],
-          }
-        : section
-    );
-
-    setData(updated);
-    setNewItems((prev) => ({ ...prev, [category]: "" }));
-  }
-
-  function deleteItem(id) {
-    const updated = data.map((section) => ({
-      ...section,
-      items: section.items.filter((item) => item.id !== id),
-    }));
-    setData(updated);
+  if (!listConfig) {
+    return <ListDetailNotFound onBack={() => navigate(-1)} />;
   }
 
   return (
-    <div className="list-detail-page">
-      <h1>{title}</h1>
+    <AppPage pageClassName="list-detail-page" containerClassName="list-detail-container">
+      <StackedPageHeader
+        sectionClassName="list-detail-header"
+        onBack={() => navigate(-1)}
+        title={listConfig.title}
+        subtitle="Avance à ton rythme et coche chaque étape au fur et à mesure."
+      />
 
-      <div className="card">
-        <div className="progress-wrap">
-          <div
-            className="progress-fill"
-            style={{ width: `${progress.percent}%` }}
-          />
-        </div>
-        <p>
-          {progress.checked} / {progress.total} ({progress.percent}%)
-        </p>
-      </div>
+      <ChecklistProgressCard progress={progress} />
 
-      {data.map((section) => (
-        <div key={section.category} className="card">
-          <h2>{section.category}</h2>
-
-          {section.items.map((item) => (
-            <div
-              key={item.id}
-              className={`item-row ${item.checked ? "done" : ""}`}
-              onClick={() => toggle(item.id)}
-            >
-              <div className="item-left">
-                <div className={`checkbox ${item.checked ? "checked" : ""}`}>
-                  {item.checked && "✓"}
-                </div>
-                <span>{item.label}</span>
-              </div>
-
-              <button
-                className="delete-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  deleteItem(item.id);
-                }}
-              >
-                ✕
-              </button>
-            </div>
-          ))}
-
-          <div className="add-item">
-            <input
-              type="text"
-              value={newItems[section.category] || ""}
-              onChange={(e) =>
-                setNewItems((prev) => ({
-                  ...prev,
-                  [section.category]: e.target.value,
-                }))
-              }
-              placeholder="Ajouter un élément"
-            />
-            <button onClick={() => addItem(section.category)}>Ajouter</button>
-          </div>
-        </div>
-      ))}
-    </div>
+      <ChecklistCategoryGroups
+        groupedItems={groupedItems}
+        expandedGroups={expandedGroups}
+        focusedItemId={focusedItemId}
+        itemRefs={itemRefs}
+        onToggleGroup={toggleGroup}
+        onToggleItem={handleToggleItem}
+      />
+    </AppPage>
   );
 }

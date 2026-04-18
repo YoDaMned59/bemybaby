@@ -1,47 +1,71 @@
-export function getTodayTasks(week) {
-    if (week == null || isNaN(week) || week < 0) {
-      return [
-        "Renseigner la date prévue d’accouchement",
-        "Commencer à préparer la liste bébé",
-        "Noter les premières questions importantes",
-      ];
-    }
-  
-    if (week < 12) {
-      return [
-        "Déclarer la grossesse",
-        "Prévenir la CAF et la CPAM",
-        "Prendre les premiers rendez-vous importants",
-      ];
-    }
-  
-    if (week < 20) {
-      return [
-        "Commencer la liste bébé",
-        "Réfléchir au mode de garde",
-        "Préparer les achats essentiels",
-      ];
-    }
-  
-    if (week < 28) {
-      return [
-        "Choisir ou finaliser la maternité",
-        "Vérifier le siège auto",
-        "Préparer progressivement la chambre de bébé",
-      ];
-    }
-  
-    if (week < 34) {
-      return [
-        "Préparer la valise maternité",
-        "Vérifier les documents importants",
-        "Finaliser les achats bébé",
-      ];
-    }
-  
-    return [
-      "Finaliser la valise maternité",
-      "Préparer les papiers pour la naissance",
-      "Vérifier que tout l’essentiel est prêt à la maison",
-    ];
+import { pregnancyTasks } from "../data/pregnancyTasks";
+
+const priorityOrder = {
+  critical: 4,
+  high: 3,
+  medium: 2,
+  low: 1,
+};
+
+export function getTodayTasks(currentWeek, completedTasks = []) {
+  if (typeof currentWeek !== "number" || currentWeek <= 0) {
+    return [];
   }
+
+  const safeCompletedTasks = Array.isArray(completedTasks)
+    ? completedTasks.filter((item) => typeof item === "string")
+    : [];
+
+  return pregnancyTasks
+    .filter((task) => {
+      const isInCurrentWindow =
+        currentWeek >= task.startWeek && currentWeek <= task.endWeek;
+
+      const isCompleted = safeCompletedTasks.includes(task.id);
+
+      return isInCurrentWindow && !isCompleted;
+    })
+    .sort((a, b) => {
+      const priorityA = priorityOrder[a.priority] || 0;
+      const priorityB = priorityOrder[b.priority] || 0;
+
+      if (priorityB !== priorityA) {
+        return priorityB - priorityA;
+      }
+
+      return a.endWeek - b.endWeek;
+    })
+    .slice(0, 3);
+}
+
+export function getUrgencyLabel(task, currentWeek) {
+  if (!task || typeof currentWeek !== "number") {
+    return "normal";
+  }
+
+  const weeksLeft = task.endWeek - currentWeek;
+
+  if (weeksLeft <= 1) {
+    return "urgent";
+  }
+
+  if (weeksLeft <= 3) {
+    return "soon";
+  }
+
+  return "normal";
+}
+
+export function getUrgencyText(task, currentWeek) {
+  const urgency = getUrgencyLabel(task, currentWeek);
+
+  if (urgency === "urgent") {
+    return "Urgent";
+  }
+
+  if (urgency === "soon") {
+    return "À anticiper";
+  }
+
+  return "À faire";
+}

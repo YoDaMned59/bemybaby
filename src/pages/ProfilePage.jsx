@@ -1,60 +1,30 @@
-import { useState } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
-import "./ProfilePage.css";
+import { useNavigate } from "react-router-dom";
+import AppPage from "../components/page/AppPage";
+import StackedPageHeader from "../components/page/StackedPageHeader";
+import ProfileForm from "../components/profile/ProfileForm";
+import { useProfileForm } from "../hooks/useProfileForm";
+import "./ProfilePage.scss";
 
 export default function ProfilePage() {
-  const [profile, setProfile] = useLocalStorage("bmb-profile", {
-    name: "",
-    dueDate: "",
-  });
-
-  const [form, setForm] = useState(profile);
-  const [saved, setSaved] = useState(false);
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  }
-
-  function handleSave() {
-    setProfile(form);
-    setSaved(true);
-
-    setTimeout(() => setSaved(false), 2000);
-  }
+  const navigate = useNavigate();
+  const { profile, saved, handleChange, handleSubmit } = useProfileForm();
 
   return (
-    <div className="profile-page">
-      <h1>Mon profil</h1>
+    <AppPage pageClassName="profile-page" containerClassName="profile-container">
+      <StackedPageHeader
+        sectionClassName="profile-header"
+        onBack={() => navigate(-1)}
+        brandClassName="profile-brand"
+        title="Mon profil"
+        subtitle="Renseigne tes informations pour personnaliser ton accompagnement."
+      />
 
-      <div className="card profile-card">
-        <label>
-          Prénom
-          <input
-            type="text"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            placeholder="Ex : Sarah"
-          />
-        </label>
-
-        <label>
-          Date prévue d’accouchement
-          <input
-            type="date"
-            name="dueDate"
-            value={form.dueDate}
-            onChange={handleChange}
-          />
-        </label>
-
-        <button onClick={handleSave} className="save-btn">
-          Enregistrer
-        </button>
-
-        {saved && <p className="success">Profil enregistré ✅</p>}
-      </div>
-    </div>
+      <ProfileForm
+        profile={profile}
+        saved={saved}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+      />
+    </AppPage>
   );
 }

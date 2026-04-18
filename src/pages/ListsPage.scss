@@ -1,0 +1,115 @@
+.lists-page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: 90px;
+}
+
+.lists-container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 20px 16px 0;
+}
+
+.lists-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+
+  .lists-brand {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent-deep);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--text-main);
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-soft);
+  }
+}
+
+.lists-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lists-card {
+  display: block;
+  text-decoration: none;
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  padding: 16px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: #fffdfc;
+    box-shadow: 0 14px 34px rgba(201, 110, 87, 0.14);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+  }
+
+  p {
+    margin: 10px 0 14px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-soft);
+  }
+}
+
+.lists-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lists-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--primary-strong);
+  flex-shrink: 0;
+}
+
+.lists-progress {
+  width: 100%;
+  height: 8px;
+  background: #f2e4de;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.lists-progress-bar {
+  height: 100%;
+  background: linear-gradient(135deg, #f6b29e 0%, #e58d74 48%, #8c6adf 100%);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}

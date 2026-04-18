@@ -1,0 +1,108 @@
+.bottom-nav {
+  position: fixed;
+  inset: auto 0 0 0;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(255, 249, 246, 0.94);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -6px 20px rgba(201, 110, 87, 0.08);
+  z-index: 20;
+}
+
+.bottom-nav-link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 92px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  text-decoration: none;
+  color: var(--text-soft);
+  transition: all 0.2s ease;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.2;
+    transition: transform 0.25s ease, color 0.25s ease;
+  }
+
+  span {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    transition: color 0.25s ease;
+  }
+
+  &:hover {
+    color: var(--accent-deep);
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    color: var(--accent-deep);
+    transform: translateY(-4px);
+
+    /* 🔥 glow doux */
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      width: 32px;
+      height: 6px;
+      border-radius: 999px;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(221, 127, 103, 0.35) 0%,
+        rgba(221, 127, 103, 0) 70%
+      );
+      filter: blur(2px);
+    }
+
+    svg {
+      transform: scale(1.15);
+    }
+  }
+}
+
+/* petite animation quand ça devient actif */
+.bottom-nav-link.active {
+  animation: navPop 0.25s ease;
+}
+
+@keyframes navPop {
+  0% {
+    transform: translateY(0);
+  }
+  60% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(-4px);
+  }
+}
+
+/* responsive */
+@media (max-width: 480px) {
+  .bottom-nav {
+    height: 74px;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  }
+
+  .bottom-nav-link {
+    min-width: 82px;
+    padding: 8px 10px;
+
+    span {
+      font-size: 11px;
+    }
+  }
+}
