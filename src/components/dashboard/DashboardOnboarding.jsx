@@ -8,24 +8,25 @@ export default function DashboardOnboarding() {
       </div>
 
       <p className="dashboard-onboarding-text">
-        Commence par renseigner ton profil pour recevoir des recommandations
-        adaptées à ta grossesse.
+        Renseigne ton profil pour activer la <strong>semaine de grossesse</strong>, les{" "}
+        <strong>rappels</strong> et les <strong>listes</strong> (bébé, valise,
+        démarches) au même endroit.
       </p>
 
       <div className="dashboard-onboarding-points">
         <div className="dashboard-onboarding-point">
           <span className="dashboard-onboarding-dot">•</span>
-          <span>Calcule automatiquement ta semaine de grossesse</span>
+          <span>Semaine de grossesse et date prévue pour cadrer les prochaines étapes</span>
         </div>
 
         <div className="dashboard-onboarding-point">
           <span className="dashboard-onboarding-dot">•</span>
-          <span>Affiche les actions les plus utiles au bon moment</span>
+          <span>Checklists à cocher : achats, valise, administratif — consultables quand tu veux</span>
         </div>
 
         <div className="dashboard-onboarding-point">
           <span className="dashboard-onboarding-dot">•</span>
-          <span>Personnalise ton suivi et tes listes</span>
+          <span>Pas de fil d’actus : l’app reste centrée sur l’organisation</span>
         </div>
       </div>
 

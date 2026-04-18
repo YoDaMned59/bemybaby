@@ -4,8 +4,9 @@ export default function DashboardHero({ firstName }) {
       <span className="dashboard-brand">BEMYBABY</span>
       <h1>Bonjour {firstName} 👋</h1>
       <p>
-        Ton assistant simple pour préparer l’arrivée de bébé sans rien
-        oublier.
+        Tes <strong>listes</strong> et tes <strong>« déjà fait »</strong> au même
+        endroit sur le téléphone — sans jongler entre Excel, notes et plusieurs
+        applis.
       </p>
     </section>
   );

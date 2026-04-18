@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import AppPage from "../components/page/AppPage";
 import StackedPageHeader from "../components/page/StackedPageHeader";
 import ProfileForm from "../components/profile/ProfileForm";
+import ProfileDocumentNotice from "../components/profile/ProfileDocumentNotice";
+import ProfileBetaFeedback from "../components/profile/ProfileBetaFeedback";
 import { useProfileForm } from "../hooks/useProfileForm";
 import "./ProfilePage.scss";
 
@@ -16,7 +18,7 @@ export default function ProfilePage() {
         onBack={() => navigate(-1)}
         brandClassName="profile-brand"
         title="Mon profil"
-        subtitle="Renseigne tes informations pour personnaliser ton accompagnement."
+        subtitle="Tes infos servent à personnaliser les listes et rappels — tout reste sur cet appareil pour l’instant."
       />
 
       <ProfileForm
@@ -25,6 +27,10 @@ export default function ProfilePage() {
         onChange={handleChange}
         onSubmit={handleSubmit}
       />
+
+      <ProfileDocumentNotice />
+
+      <ProfileBetaFeedback />
     </AppPage>
   );
 }
