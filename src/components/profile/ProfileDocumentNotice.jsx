@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function ProfileDocumentNotice() {
   return (
     <section className="profile-info-card" aria-labelledby="profile-data-title">
@@ -27,6 +29,10 @@ export default function ProfileDocumentNotice() {
         pour t’aider à t’organiser. En cas de doute sur ta santé ou celle de ton
         bébé, ou en cas d’urgence, contacte <strong>un professionnel de santé</strong>{" "}
         ou le <strong>15</strong> (SAMU — urgence vitale immédiate).
+      </p>
+
+      <p className="profile-info-privacy-link">
+        <Link to="/confidentialite">Confidentialité et mesure d’audience</Link>
       </p>
     </section>
   );

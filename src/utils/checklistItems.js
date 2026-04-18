@@ -1,5 +1,18 @@
 import { readStorage } from "./storage";
 
+export function isCustomChecklistItem(item) {
+  if (!item || typeof item !== "object") {
+    return false;
+  }
+
+  if (item.isCustom === true) {
+    return true;
+  }
+
+  const id = String(item.id ?? "");
+  return id.startsWith("custom-");
+}
+
 export function normalizeReferenceItems(items) {
   if (!Array.isArray(items)) {
     return [];
@@ -16,29 +29,71 @@ export function normalizeReferenceItems(items) {
         ? item.category
         : "Autres",
     checked: item.checked === true,
+    isCustom: item.isCustom === true,
   }));
 }
 
 export function getInitialChecklistItems(storageKey, fallbackData) {
-  const referenceItems = normalizeReferenceItems(fallbackData);
-  const storedItems = readStorage(storageKey, []);
+  const referenceItems = normalizeReferenceItems(fallbackData).map((item) => ({
+    ...item,
+    isCustom: false,
+  }));
+  const referenceIds = new Set(referenceItems.map((item) => item.id));
 
-  if (!Array.isArray(storedItems) || storedItems.length === 0) {
+  const storedRaw = readStorage(storageKey, []);
+  const storedItems = Array.isArray(storedRaw)
+    ? storedRaw.filter((item) => item && typeof item === "object")
+    : [];
+
+  if (storedItems.length === 0) {
     return referenceItems;
   }
 
-  const storedCheckedMap = new Map(
-    storedItems
-      .filter((item) => item && typeof item === "object")
-      .map((item) => [String(item.id), item.checked === true])
+  const storedById = new Map(
+    storedItems.map((item) => [String(item.id), item])
   );
 
-  return referenceItems.map((item) => ({
-    ...item,
-    checked: storedCheckedMap.has(item.id)
-      ? storedCheckedMap.get(item.id)
-      : item.checked,
-  }));
+  const mergedReference = referenceItems.map((item) => {
+    const stored = storedById.get(item.id);
+    return {
+      ...item,
+      checked: stored ? stored.checked === true : item.checked,
+    };
+  });
+
+  const customItems = [];
+  const seenCustomIds = new Set();
+
+  for (const stored of storedItems) {
+    const id = String(stored.id);
+    if (referenceIds.has(id)) {
+      continue;
+    }
+    if (!isCustomChecklistItem(stored)) {
+      continue;
+    }
+    if (seenCustomIds.has(id)) {
+      continue;
+    }
+    seenCustomIds.add(id);
+
+    const normalized = normalizeReferenceItems([
+      {
+        id: stored.id,
+        label: stored.label,
+        category: stored.category,
+        checked: stored.checked,
+        isCustom: true,
+      },
+    ])[0];
+
+    customItems.push({
+      ...normalized,
+      isCustom: true,
+    });
+  }
+
+  return [...mergedReference, ...customItems];
 }
 
 export function groupChecklistItemsByCategory(items) {

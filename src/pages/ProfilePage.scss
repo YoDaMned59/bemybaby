@@ -225,6 +225,20 @@
   color: var(--text-muted);
 }
 
+.profile-info-privacy-link {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  font-weight: 700;
+
+  a {
+    color: var(--primary-strong);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
+
 .profile-feedback-button {
   display: inline-flex;
   align-items: center;

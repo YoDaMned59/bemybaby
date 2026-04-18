@@ -171,15 +171,30 @@
   gap: 12px;
 }
 
+.list-detail-item-wrap {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 4px 4px 4px 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.list-detail-item-wrap--focused {
+  border: 2px solid #d7c2ff;
+  background: #fff8ff;
+  box-shadow: 0 12px 30px rgba(118, 85, 207, 0.12);
+}
+
 .list-detail-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 14px 16px;
-  box-shadow: var(--shadow-card);
+  flex: 1;
+  min-width: 0;
+  padding: 10px 8px 10px 0;
   cursor: pointer;
 
   input {
@@ -196,10 +211,78 @@
   }
 }
 
-.list-detail-item--focused {
-  border: 2px solid #d7c2ff;
-  background: #fff8ff;
-  box-shadow: 0 12px 30px rgba(118, 85, 207, 0.12);
+.list-detail-item-remove {
+  align-self: center;
+  flex-shrink: 0;
+  margin: 6px 8px 6px 0;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-soft);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    color: #b42318;
+    border-color: #f5c4c0;
+    background: #fff5f4;
+  }
+}
+
+.list-detail-add-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 14px;
+  background: #fffdfc;
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+}
+
+.list-detail-add-input {
+  flex: 1;
+  min-width: 160px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-main);
+  background: var(--card);
+
+  &::placeholder {
+    color: var(--text-soft);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #c9b8f0;
+    box-shadow: 0 0 0 3px rgba(140, 106, 223, 0.15);
+  }
+}
+
+.list-detail-add-btn {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, #e58d74 0%, #8c6adf 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+
+  &:hover {
+    filter: brightness(1.03);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 }
 
 @media (max-width: 480px) {

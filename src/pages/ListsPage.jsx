@@ -2,12 +2,15 @@ import { useNavigate } from "react-router-dom";
 import AppPage from "../components/page/AppPage";
 import StackedPageHeader from "../components/page/StackedPageHeader";
 import ChecklistSummaryGrid from "../components/lists/ChecklistSummaryGrid";
+import ProfileListsGate from "../components/lists/ProfileListsGate";
 import { useProgress } from "../hooks/useProgress";
+import { useProfile } from "../hooks/useProfile";
 import { CHECKLIST_IDS, CHECKLISTS } from "../data/checklistsConfig";
 import "./ListsPage.scss";
 
 export default function ListsPage() {
   const navigate = useNavigate();
+  const { isProfileComplete } = useProfile();
   const { progressById } = useProgress();
 
   const lists = CHECKLIST_IDS.map((id) => {
@@ -32,7 +35,11 @@ export default function ListsPage() {
         subtitle="Retrouve toutes tes checklists au même endroit."
       />
 
-      <ChecklistSummaryGrid lists={lists} />
+      {isProfileComplete ? (
+        <ChecklistSummaryGrid lists={lists} />
+      ) : (
+        <ProfileListsGate />
+      )}
     </AppPage>
   );
 }

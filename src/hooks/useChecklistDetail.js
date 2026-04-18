@@ -78,6 +78,15 @@ export function useChecklistDetail(listId, locationSearch) {
     }
   }, [focusedItemId, items, expandedGroups]);
 
+  function persist(nextItems) {
+    if (!listConfig) {
+      return;
+    }
+
+    setItems(nextItems);
+    writeStorage(listConfig.storageKey, nextItems);
+  }
+
   function handleToggleItem(itemId) {
     if (!listConfig) {
       return;
@@ -87,8 +96,36 @@ export function useChecklistDetail(listId, locationSearch) {
       item.id === itemId ? { ...item, checked: !item.checked } : item
     );
 
-    setItems(updatedItems);
-    writeStorage(listConfig.storageKey, updatedItems);
+    persist(updatedItems);
+  }
+
+  function handleAddCustomItem(category, label) {
+    if (!listConfig) {
+      return;
+    }
+
+    const trimmed = typeof label === "string" ? label.trim() : "";
+    if (!trimmed) {
+      return;
+    }
+
+    const newItem = {
+      id: `custom-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+      label: trimmed,
+      category,
+      checked: false,
+      isCustom: true,
+    };
+
+    persist([...items, newItem]);
+  }
+
+  function handleRemoveCustomItem(itemId) {
+    if (!listConfig) {
+      return;
+    }
+
+    persist(items.filter((item) => item.id !== itemId));
   }
 
   function toggleGroup(category) {
@@ -107,6 +144,8 @@ export function useChecklistDetail(listId, locationSearch) {
     focusedItemId,
     itemRefs,
     handleToggleItem,
+    handleAddCustomItem,
+    handleRemoveCustomItem,
     toggleGroup,
   };
 }

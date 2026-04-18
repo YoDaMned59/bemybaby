@@ -1,4 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
+import { readStorage, writeStorage } from "../../utils/storage";
+
+const PWA_INSTALLED_KEY = "pwaInstalled";
 
 function isStandaloneDisplay() {
   if (typeof window === "undefined") {
@@ -8,8 +11,17 @@ function isStandaloneDisplay() {
   return (
     window.matchMedia("(display-mode: standalone)").matches ||
     window.matchMedia("(display-mode: fullscreen)").matches ||
+    window.matchMedia("(display-mode: minimal-ui)").matches ||
     Boolean(window.navigator.standalone)
   );
+}
+
+function isInstallBannerDismissed() {
+  return readStorage(PWA_INSTALLED_KEY, false) === true;
+}
+
+function markInstallBannerDismissed() {
+  writeStorage(PWA_INSTALLED_KEY, true);
 }
 
 function isLikelyIOS() {
@@ -20,13 +32,71 @@ function isLikelyIOS() {
   return /iphone|ipad|ipod/i.test(navigator.userAgent);
 }
 
+function computeBannerHidden() {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  return isStandaloneDisplay() || isInstallBannerDismissed();
+}
+
 export default function DashboardPwaInstall() {
-  const [standalone] = useState(() => isStandaloneDisplay());
+  const [bannerHidden, setBannerHidden] = useState(computeBannerHidden);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const ios = isLikelyIOS();
 
   useEffect(() => {
-    if (standalone) {
+    function refreshHidden() {
+      if (isStandaloneDisplay() || isInstallBannerDismissed()) {
+        setBannerHidden(true);
+        return true;
+      }
+
+      return false;
+    }
+
+    if (refreshHidden()) {
+      return undefined;
+    }
+
+    const mqs = [
+      window.matchMedia("(display-mode: standalone)"),
+      window.matchMedia("(display-mode: fullscreen)"),
+      window.matchMedia("(display-mode: minimal-ui)"),
+    ];
+
+    function onDisplayModeChange() {
+      if (isStandaloneDisplay()) {
+        setBannerHidden(true);
+      }
+    }
+
+    mqs.forEach((mq) => mq.addEventListener("change", onDisplayModeChange));
+
+    function onAppInstalled() {
+      markInstallBannerDismissed();
+      setBannerHidden(true);
+    }
+
+    window.addEventListener("appinstalled", onAppInstalled);
+
+    function onVisibility() {
+      if (document.visibilityState === "visible") {
+        refreshHidden();
+      }
+    }
+
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      mqs.forEach((mq) => mq.removeEventListener("change", onDisplayModeChange));
+      window.removeEventListener("appinstalled", onAppInstalled);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (bannerHidden) {
       return undefined;
     }
 
@@ -38,7 +108,7 @@ export default function DashboardPwaInstall() {
     window.addEventListener("beforeinstallprompt", onBeforeInstallPrompt);
     return () =>
       window.removeEventListener("beforeinstallprompt", onBeforeInstallPrompt);
-  }, [standalone]);
+  }, [bannerHidden]);
 
   const handleInstallClick = useCallback(async () => {
     if (!deferredPrompt) {
@@ -46,10 +116,16 @@ export default function DashboardPwaInstall() {
     }
 
     await deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
     setDeferredPrompt(null);
+
+    if (outcome === "accepted") {
+      markInstallBannerDismissed();
+      setBannerHidden(true);
+    }
   }, [deferredPrompt]);
 
-  if (standalone) {
+  if (bannerHidden) {
     return null;
   }
 

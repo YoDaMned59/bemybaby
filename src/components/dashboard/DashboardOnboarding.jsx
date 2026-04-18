@@ -25,8 +25,8 @@ export default function DashboardOnboarding() {
         <div className="dashboard-onboarding-point">
           <span className="dashboard-onboarding-dot">•</span>
           <span>
-            Des listes à cocher (achats, valise, administratif), disponibles quand tu en
-            as besoin
+            Des listes à cocher (achats, valise, administratif) : elles se débloquent une
+            fois le profil complété
           </span>
         </div>
 

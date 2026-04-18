@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { isCustomChecklistItem } from "../../utils/checklistItems";
+
 export default function ChecklistCategoryGroups({
   groupedItems,
   expandedGroups,
@@ -5,6 +8,8 @@ export default function ChecklistCategoryGroups({
   itemRefs,
   onToggleGroup,
   onToggleItem,
+  onAddCustomItem,
+  onRemoveCustomItem,
 }) {
   return (
     <section className="list-detail-groups">
@@ -45,31 +50,85 @@ export default function ChecklistCategoryGroups({
               <div className="list-detail-items">
                 {group.items.map((item) => {
                   const isFocused = focusedItemId === item.id;
+                  const custom = isCustomChecklistItem(item);
 
                   return (
-                    <label
+                    <div
                       key={item.id}
                       ref={(element) => {
                         itemRefs.current[item.id] = element;
                       }}
-                      className={`list-detail-item ${
-                        isFocused ? "list-detail-item--focused" : ""
+                      className={`list-detail-item-wrap ${
+                        isFocused ? "list-detail-item-wrap--focused" : ""
                       }`}
                     >
-                      <input
-                        type="checkbox"
-                        checked={item.checked}
-                        onChange={() => onToggleItem(item.id)}
-                      />
-                      <span>{item.label}</span>
-                    </label>
+                      <label className="list-detail-item">
+                        <input
+                          type="checkbox"
+                          checked={item.checked}
+                          onChange={() => onToggleItem(item.id)}
+                        />
+                        <span>{item.label}</span>
+                      </label>
+                      {custom ? (
+                        <button
+                          type="button"
+                          className="list-detail-item-remove"
+                          aria-label={`Supprimer ${item.label}`}
+                          onClick={() => onRemoveCustomItem(item.id)}
+                        >
+                          Retirer
+                        </button>
+                      ) : null}
+                    </div>
                   );
                 })}
+
+                <CategoryAddRow
+                  category={group.category}
+                  onAdd={(label) => onAddCustomItem(group.category, label)}
+                />
               </div>
             ) : null}
           </div>
         );
       })}
     </section>
+  );
+}
+
+function CategoryAddRow({ category, onAdd }) {
+  const [draft, setDraft] = useState("");
+
+  function submit() {
+    const value = draft.trim();
+    if (!value) {
+      return;
+    }
+
+    onAdd(value);
+    setDraft("");
+  }
+
+  return (
+    <div className="list-detail-add-row">
+      <input
+        type="text"
+        className="list-detail-add-input"
+        value={draft}
+        onChange={(event) => setDraft(event.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            submit();
+          }
+        }}
+        placeholder="Ajouter une ligne…"
+        aria-label={`Ajouter un élément dans ${category}`}
+      />
+      <button type="button" className="list-detail-add-btn" onClick={submit}>
+        Ajouter
+      </button>
+    </div>
   );
 }
