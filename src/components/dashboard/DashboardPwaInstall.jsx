@@ -1,4 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
+import {
+  clearDeferredInstallPrompt,
+  getDeferredInstallPrompt,
+  subscribeDeferredInstallPrompt,
+} from "../../utils/installPromptCapture";
 import { readStorage, writeStorage } from "../../utils/storage";
 
 const PWA_INSTALLED_KEY = "pwaInstalled";
@@ -56,7 +61,9 @@ function computeBannerHidden() {
 
 export default function DashboardPwaInstall() {
   const [bannerHidden, setBannerHidden] = useState(computeBannerHidden);
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [deferredPrompt, setDeferredPrompt] = useState(() =>
+    typeof window !== "undefined" ? getDeferredInstallPrompt() : null
+  );
   const [iosHelpOpen, setIosHelpOpen] = useState(false);
 
   const isAppleTouch = isLikelyAppleTouchDevice();
@@ -118,14 +125,7 @@ export default function DashboardPwaInstall() {
       return undefined;
     }
 
-    function onBeforeInstallPrompt(event) {
-      event.preventDefault();
-      setDeferredPrompt(event);
-    }
-
-    window.addEventListener("beforeinstallprompt", onBeforeInstallPrompt);
-    return () =>
-      window.removeEventListener("beforeinstallprompt", onBeforeInstallPrompt);
+    return subscribeDeferredInstallPrompt(setDeferredPrompt);
   }, [bannerHidden]);
 
   const handleInstallClick = useCallback(async () => {
@@ -136,6 +136,7 @@ export default function DashboardPwaInstall() {
     await deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     setDeferredPrompt(null);
+    clearDeferredInstallPrompt();
 
     if (outcome === "accepted") {
       markInstallBannerDismissed();

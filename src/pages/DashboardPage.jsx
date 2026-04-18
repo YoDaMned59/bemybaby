@@ -6,6 +6,7 @@ import DashboardBabySection from "../components/dashboard/DashboardBabySection";
 import DashboardProgressSection from "../components/dashboard/DashboardProgressSection";
 import DashboardTasksSection from "../components/dashboard/DashboardTasksSection";
 import DashboardDailyTip from "../components/dashboard/DashboardDailyTip";
+import DashboardBetaFeedbackBanner from "../components/dashboard/DashboardBetaFeedbackBanner";
 import DashboardPwaInstall from "../components/dashboard/DashboardPwaInstall";
 import { getTodayTasks } from "../utils/todayTasks";
 import { useProfile } from "../hooks/useProfile";
@@ -40,6 +41,8 @@ export default function DashboardPage() {
   return (
     <AppPage pageClassName="dashboard-page" containerClassName="dashboard-container">
       <DashboardHero firstName={firstName} />
+
+      <DashboardBetaFeedbackBanner />
 
       <DashboardPwaInstall />
 
