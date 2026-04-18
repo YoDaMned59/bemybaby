@@ -427,6 +427,71 @@
   color: var(--text-soft);
 }
 
+/* PWA — installation écran d’accueil */
+
+.dashboard-pwa-install {
+  .dashboard-pwa-install-lead {
+    margin: 0 0 14px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-soft);
+  }
+
+  .dashboard-pwa-install-actions {
+    margin-bottom: 14px;
+  }
+
+  .dashboard-pwa-install-button {
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    color: #fff;
+    background: var(--primary);
+    box-shadow: var(--shadow-button);
+    cursor: pointer;
+  }
+
+  .dashboard-pwa-install-button:focus-visible {
+    outline: 2px solid var(--primary-strong);
+    outline-offset: 2px;
+  }
+
+  .dashboard-pwa-install-hint {
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    background: var(--primary-soft);
+    border: 1px solid var(--primary-soft-hover);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-main);
+
+    strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: var(--primary-strong);
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .dashboard-pwa-share {
+    white-space: nowrap;
+  }
+
+  .dashboard-pwa-install-note {
+    margin-top: 10px !important;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+}
+
 /* animations */
 
 @keyframes fadeUpSoft {

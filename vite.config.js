@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["pwa-icon.svg"],
+      includeAssets: ["pwa-icon.svg", "pwa-192.png", "pwa-512.png"],
       manifest: {
         name: "BeMyBaby",
         short_name: "BeMyBaby",
@@ -23,10 +23,28 @@ export default defineConfig({
         lang: "fr",
         icons: [
           {
+            src: "/pwa-192.png",
+            sizes: "192x192",
+            type: "image/png",
+            purpose: "any",
+          },
+          {
+            src: "/pwa-512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any",
+          },
+          {
+            src: "/pwa-512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
+          },
+          {
             src: "/pwa-icon.svg",
             sizes: "512x512",
             type: "image/svg+xml",
-            purpose: "any maskable",
+            purpose: "any",
           },
         ],
       },
