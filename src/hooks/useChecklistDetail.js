@@ -7,6 +7,7 @@ import {
   groupChecklistItemsByCategory,
   mergeExpandedGroups,
 } from "../utils/checklistItems";
+import { trackAppEvent } from "../utils/appAnalytics";
 import { writeStorage } from "../utils/storage";
 
 export function useChecklistDetail(listId, locationSearch) {
@@ -92,11 +93,24 @@ export function useChecklistDetail(listId, locationSearch) {
       return;
     }
 
+    const prevProgress = getChecklistProgressPercent(items);
     const updatedItems = items.map((item) =>
       item.id === itemId ? { ...item, checked: !item.checked } : item
     );
+    const nextProgress = getChecklistProgressPercent(updatedItems);
 
     persist(updatedItems);
+
+    const milestones = [25, 50, 75, 100];
+    for (const m of milestones) {
+      if (prevProgress < m && nextProgress >= m) {
+        trackAppEvent("checklist_milestone", {
+          list_id: listConfig.id,
+          milestone: m,
+        });
+        break;
+      }
+    }
   }
 
   function handleAddCustomItem(category, label) {
@@ -118,6 +132,9 @@ export function useChecklistDetail(listId, locationSearch) {
     };
 
     persist([...items, newItem]);
+    trackAppEvent("checklist_custom_item_added", {
+      list_id: listConfig.id,
+    });
   }
 
   function handleRemoveCustomItem(itemId) {

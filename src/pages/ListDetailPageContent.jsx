@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import StackedPageHeader from "../components/page/StackedPageHeader";
 import ChecklistProgressCard from "../components/list-detail/ChecklistProgressCard";
 import ChecklistCategoryGroups from "../components/list-detail/ChecklistCategoryGroups";
 import { useChecklistDetail } from "../hooks/useChecklistDetail";
+import { trackAppEvent } from "../utils/appAnalytics";
 
 export default function ListDetailPageContent({ listId, locationSearch }) {
   const navigate = useNavigate();
@@ -18,6 +20,13 @@ export default function ListDetailPageContent({ listId, locationSearch }) {
     handleRemoveCustomItem,
     toggleGroup,
   } = useChecklistDetail(listId, locationSearch);
+
+  useEffect(() => {
+    if (!listConfig) {
+      return;
+    }
+    trackAppEvent("list_checklist_open", { list_id: listConfig.id });
+  }, [listConfig]);
 
   if (!listConfig) {
     return null;

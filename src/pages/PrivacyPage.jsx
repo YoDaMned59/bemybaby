@@ -4,6 +4,7 @@ import StackedPageHeader from "../components/page/StackedPageHeader";
 import "./PrivacyPage.scss";
 
 const VERCEL_PRIVACY = "https://vercel.com/legal/privacy-policy";
+const UMAMI_PRIVACY = "https://umami.is/privacy";
 
 export default function PrivacyPage() {
   const navigate = useNavigate();
@@ -39,6 +40,21 @@ export default function PrivacyPage() {
           <strong>agrégés</strong> peuvent être collectés (par exemple pages consultées,
           pays ou type d’appareil, de façon anonymisée). Cela sert à estimer l’usage global
           de l’app, indépendamment du formulaire de retour bêta.
+        </p>
+        <p>
+          Si <strong>Umami</strong> (mesure d’audience) est configuré pour ce site, des
+          données d’usage équivalentes (pages vues et événements techniques agrégés) peuvent
+          être traitées par le service{" "}
+          <strong>Umami Cloud</strong>.{" "}
+          <a href={UMAMI_PRIVACY} target="_blank" rel="noopener noreferrer">
+            Politique de confidentialité Umami
+          </a>
+        </p>
+        <p>
+          Quelques <strong>événements techniques agrégés</strong> peuvent aussi être
+          envoyés (par exemple enregistrement du profil côté navigateur, ouverture d’une
+          liste débloquée, paliers d’avancement très grossiers), toujours{" "}
+          <strong>sans</strong> transmettre le contenu des champs ni le détail des coches.
         </p>
         <p>
           Ces statistiques <strong>ne contiennent pas</strong> ton prénom, ta date prévue
