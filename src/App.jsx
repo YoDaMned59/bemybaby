@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import PostHogPageview from "./components/PostHogPageview";
 import DashboardPage from "./pages/DashboardPage";
 import ListsPage from "./pages/ListsPage";
 import ListDetailPage from "./pages/ListDetailPage";
@@ -8,6 +9,7 @@ import PrivacyPage from "./pages/PrivacyPage";
 export default function App() {
   return (
     <BrowserRouter>
+      <PostHogPageview />
       <Routes>
         <Route path="/" element={<DashboardPage />} />
         <Route path="/lists" element={<ListsPage />} />

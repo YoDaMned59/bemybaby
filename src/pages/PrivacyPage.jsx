@@ -5,6 +5,7 @@ import "./PrivacyPage.scss";
 
 const VERCEL_PRIVACY = "https://vercel.com/legal/privacy-policy";
 const UMAMI_PRIVACY = "https://umami.is/privacy";
+const POSTHOG_PRIVACY = "https://posthog.com/privacy";
 
 export default function PrivacyPage() {
   const navigate = useNavigate();
@@ -48,6 +49,14 @@ export default function PrivacyPage() {
           <strong>Umami Cloud</strong>.{" "}
           <a href={UMAMI_PRIVACY} target="_blank" rel="noopener noreferrer">
             Politique de confidentialité Umami
+          </a>
+        </p>
+        <p>
+          Si <strong>PostHog</strong> est activé, des statistiques d’usage (pages, événements
+          techniques agrégés) peuvent être traitées sur l’infrastructure{" "}
+          <strong>PostHog</strong> (hébergement possible dans l’UE selon le projet).{" "}
+          <a href={POSTHOG_PRIVACY} target="_blank" rel="noopener noreferrer">
+            Politique de confidentialité PostHog (en anglais)
           </a>
         </p>
         <p>
