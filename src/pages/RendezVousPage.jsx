@@ -2,13 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppPage from "../components/page/AppPage";
 import StackedPageHeader from "../components/page/StackedPageHeader";
-import ProfileListsGate from "../components/lists/ProfileListsGate";
 import {
   APPOINTMENT_TEMPLATES,
   RDV_OFFICIAL_SOURCES,
 } from "../data/appointmentsTemplates";
 import { useAppointments } from "../hooks/useAppointments";
-import { useProfile } from "../hooks/useProfile";
 import { formatRdvCountdown } from "../utils/rdvCountdown";
 import "./RendezVousPage.scss";
 
@@ -28,7 +26,6 @@ function formatLongDate(iso) {
 
 export default function RendezVousPage() {
   const navigate = useNavigate();
-  const { isProfileComplete } = useProfile();
   const {
     appointments,
     addFromTemplate,
@@ -45,20 +42,6 @@ export default function RendezVousPage() {
   });
   const [planningId, setPlanningId] = useState(null);
   const [templateDate, setTemplateDate] = useState("");
-
-  if (!isProfileComplete) {
-    return (
-      <AppPage pageClassName="rdv-page" containerClassName="rdv-container">
-        <StackedPageHeader
-          sectionClassName="rdv-header"
-          onBack={() => navigate(-1)}
-          title="Rendez-vous"
-          subtitle="Indique ton prénom et ta date prévue dans Profil pour noter des rendez-vous ici."
-        />
-        <ProfileListsGate listTitle="Rendez-vous" />
-      </AppPage>
-    );
-  }
 
   function onPlanTemplate(tmpl) {
     setPlanningId(tmpl.id);

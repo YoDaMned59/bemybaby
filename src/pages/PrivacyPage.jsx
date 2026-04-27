@@ -68,7 +68,7 @@ export default function PrivacyPage() {
         <p>
           Quelques <strong>événements techniques agrégés</strong> peuvent aussi être
           envoyés (par exemple enregistrement du profil côté navigateur, ouverture d’une
-          liste débloquée, paliers d’avancement très grossiers), toujours{" "}
+          liste, paliers d’avancement très grossiers), toujours{" "}
           <strong>sans</strong> transmettre le contenu des champs ni le détail des coches.
         </p>
         <p>

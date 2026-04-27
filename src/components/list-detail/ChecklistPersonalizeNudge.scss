@@ -1,0 +1,57 @@
+.checklist-personalize-nudge {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 14px;
+  padding: 10px 12px 10px 14px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, #f8f4ff 0%, #fff8f5 100%);
+  border: 1px solid #e4dcf0;
+  box-shadow: 0 4px 14px rgba(140, 106, 223, 0.08);
+}
+
+.checklist-personalize-nudge-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+
+.checklist-personalize-nudge-link {
+  font-weight: 800;
+  color: var(--primary-strong);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: var(--primary);
+  }
+}
+
+.checklist-personalize-nudge-close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: -4px -4px -4px 0;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-main);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-strong);
+    outline-offset: 1px;
+  }
+}

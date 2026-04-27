@@ -1,6 +1,7 @@
 import AppPage from "../components/page/AppPage";
 import DashboardHero from "../components/dashboard/DashboardHero";
-import DashboardOnboarding from "../components/dashboard/DashboardOnboarding";
+import DashboardListQuickAccess from "../components/dashboard/DashboardListQuickAccess";
+import DashboardProfileTeaser from "../components/dashboard/DashboardProfileTeaser";
 import DashboardInfoCards from "../components/dashboard/DashboardInfoCards";
 import DashboardBabySection from "../components/dashboard/DashboardBabySection";
 import DashboardProgressSection from "../components/dashboard/DashboardProgressSection";
@@ -18,7 +19,6 @@ import "./DashboardPage.scss";
 
 export default function DashboardPage() {
   const {
-    firstName,
     formattedDueDate,
     currentWeek,
     hasDueDate,
@@ -41,13 +41,15 @@ export default function DashboardPage() {
 
   return (
     <AppPage pageClassName="dashboard-page" containerClassName="dashboard-container">
-      <DashboardHero firstName={firstName} />
+      <DashboardHero />
+
+      <DashboardListQuickAccess />
+
+      {!isProfileComplete ? <DashboardProfileTeaser /> : null}
 
       <DashboardBetaFeedbackBanner />
 
       <DashboardPwaInstall />
-
-      {!isProfileComplete ? <DashboardOnboarding /> : null}
 
       <DashboardInfoCards
         hasDueDate={hasDueDate}
@@ -62,7 +64,7 @@ export default function DashboardPage() {
         />
       ) : null}
 
-      {isProfileComplete ? <DashboardRdvTeaser /> : null}
+      <DashboardRdvTeaser />
 
       <DashboardProgressSection
         overallProgress={overallProgress}

@@ -97,7 +97,6 @@ function sendUmamiEvent(name, properties) {
  * | name | rôle |
  * |------|------|
  * | `profile_saved` | Profil enregistré (`complete` : prénom + date) |
- * | `list_profile_gate` | Liste consultée sans profil complet (friction) |
  * | `list_checklist_open` | Ouverture d’une liste (checklist) |
  * | `checklist_milestone` | Palier 25 / 50 / 75 / 100 % (`list_id`, `milestone`) |
  * | `checklist_custom_item_added` | Item personnalisé ajouté |

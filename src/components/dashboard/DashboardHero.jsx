@@ -1,13 +1,30 @@
-export default function DashboardHero({ firstName }) {
+import { Link } from "react-router-dom";
+
+export default function DashboardHero() {
   return (
-    <section className="dashboard-hero">
+    <section className="dashboard-hero" aria-labelledby="dashboard-hero-title">
       <span className="dashboard-brand">BEMYBABY</span>
-      <h1>Bonjour {firstName} 👋</h1>
-      <p>
-        Toutes tes <strong>listes</strong> et ce que tu as <strong>déjà fait</strong>{" "}
-        sont réunis ici, sur ton téléphone — sans jongler entre un tableur, des notes
-        et plusieurs applications.
+      <h1 id="dashboard-hero-title">
+        Prépare l’arrivée de bébé sans rien oublier{" "}
+        <span className="dashboard-hero-emoji" aria-hidden>
+          👶
+        </span>
+      </h1>
+      <p className="dashboard-hero-subtitle">
+        Checklists simples, valise maternité, démarches et rendez-vous au même
+        endroit.
       </p>
+      <div className="dashboard-hero-cta">
+        <Link to="/lists" className="dashboard-hero-button dashboard-hero-button--primary">
+          Commencer mes listes
+        </Link>
+        <Link
+          to="/profile"
+          className="dashboard-hero-button dashboard-hero-button--secondary"
+        >
+          Personnaliser ma grossesse
+        </Link>
+      </div>
     </section>
   );
 }
