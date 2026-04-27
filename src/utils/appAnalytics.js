@@ -1,9 +1,51 @@
 import { track } from "@vercel/analytics";
+import { isGa4Enabled } from "./ga4Bootstrap";
 
 export function isAppAnalyticsEnabled() {
   return (
     import.meta.env.PROD && import.meta.env.VITE_DISABLE_ANALYTICS !== "true"
   );
+}
+
+/**
+ * Paramètres compatibles GA4 (pas d’objets imbriqués, pas de PII).
+ * @param {Record<string, string | number | boolean | null | undefined>} [properties]
+ * @returns {Record<string, string | number | boolean> | undefined}
+ */
+function sanitizeForGa4(properties) {
+  if (!properties) {
+    return undefined;
+  }
+  const out = {};
+  for (const [key, value] of Object.entries(properties)) {
+    if (value === null || value === undefined) {
+      continue;
+    }
+    if (
+      typeof value === "boolean" ||
+      typeof value === "number" ||
+      typeof value === "string"
+    ) {
+      out[key] = value;
+    }
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+
+function sendGa4Event(name, properties) {
+  if (!isGa4Enabled() || typeof window.gtag !== "function") {
+    return;
+  }
+  const params = sanitizeForGa4(properties);
+  try {
+    if (params && Object.keys(params).length > 0) {
+      window.gtag("event", name, params);
+    } else {
+      window.gtag("event", name);
+    }
+  } catch {
+    // idem Vercel : ne pas bloquer l’app
+  }
 }
 
 function isUmamiTrackingEnabled() {
@@ -46,11 +88,28 @@ function sendUmamiEvent(name, properties) {
 }
 
 /**
- * Événements agrégés (Vercel et/ou Umami). Aucun prénom, date ni contenu de liste.
+ * Événements agrégés (Vercel, Umami, GA4 si `VITE_GA_MEASUREMENT_ID`). Aucun prénom, date ni contenu de liste.
+ *
+ * **Suivi hebdo (suggestion)** — dans GA4 : Rapports → Engagement → Événements, filtre 7 jours.
+ * Marquer comme « événement clé » (Admin → Événements) pour le tunnel : `profile_saved` (complete),
+ * `list_checklist_open`, `checklist_milestone` (milestone 100), `rdv_added`.
+ *
+ * | name | rôle |
+ * |------|------|
+ * | `profile_saved` | Profil enregistré (`complete` : prénom + date) |
+ * | `list_profile_gate` | Liste consultée sans profil complet (friction) |
+ * | `list_checklist_open` | Ouverture d’une liste (checklist) |
+ * | `checklist_milestone` | Palier 25 / 50 / 75 / 100 % (`list_id`, `milestone`) |
+ * | `checklist_custom_item_added` | Item personnalisé ajouté |
+ * | `rdv_added` | RDV ajouté (`from_template`) |
+ * | `rdv_removed` | RDV retiré |
+ *
  * @param {string} name
  * @param {Record<string, string | number | boolean | null | undefined>} [properties]
  */
 export function trackAppEvent(name, properties) {
+  sendGa4Event(name, properties);
+
   if (isAppAnalyticsEnabled()) {
     try {
       track(name, properties);
