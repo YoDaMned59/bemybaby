@@ -1,5 +1,4 @@
 import { track } from "@vercel/analytics";
-import { isPostHogTrackingEnabled, posthog } from "./posthogBootstrap";
 
 export function isAppAnalyticsEnabled() {
   return (
@@ -47,7 +46,7 @@ function sendUmamiEvent(name, properties) {
 }
 
 /**
- * Événements agrégés (Vercel, Umami et/ou PostHog). Aucun prénom, date ni contenu de liste.
+ * Événements agrégés (Vercel et/ou Umami). Aucun prénom, date ni contenu de liste.
  * @param {string} name
  * @param {Record<string, string | number | boolean | null | undefined>} [properties]
  */
@@ -61,16 +60,4 @@ export function trackAppEvent(name, properties) {
   }
 
   sendUmamiEvent(name, properties);
-
-  if (isPostHogTrackingEnabled()) {
-    try {
-      if (properties && Object.keys(properties).length > 0) {
-        posthog.capture(name, properties);
-      } else {
-        posthog.capture(name);
-      }
-    } catch {
-      // Ne pas bloquer l’app si PostHog n’est pas prêt.
-    }
-  }
 }

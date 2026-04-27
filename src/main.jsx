@@ -1,5 +1,5 @@
 import "./utils/umamiBootstrap";
-import "./utils/posthogBootstrap";
+import "./utils/ga4Bootstrap";
 import "./utils/installPromptCapture";
 import React from "react";
 import ReactDOM from "react-dom/client";
