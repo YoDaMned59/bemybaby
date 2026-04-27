@@ -5,6 +5,7 @@ import ListsPage from "./pages/ListsPage";
 import ListDetailPage from "./pages/ListDetailPage";
 import ProfilePage from "./pages/ProfilePage";
 import PrivacyPage from "./pages/PrivacyPage";
+import RendezVousPage from "./pages/RendezVousPage";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       <Ga4Pageview />
       <Routes>
         <Route path="/" element={<DashboardPage />} />
+        <Route path="/rdv" element={<RendezVousPage />} />
         <Route path="/lists" element={<ListsPage />} />
         <Route path="/lists/:listId" element={<ListDetailPage />} />
         <Route path="/profile" element={<ProfilePage />} />

@@ -8,6 +8,7 @@ import DashboardTasksSection from "../components/dashboard/DashboardTasksSection
 import DashboardDailyTip from "../components/dashboard/DashboardDailyTip";
 import DashboardBetaFeedbackBanner from "../components/dashboard/DashboardBetaFeedbackBanner";
 import DashboardPwaInstall from "../components/dashboard/DashboardPwaInstall";
+import DashboardRdvTeaser from "../components/dashboard/DashboardRdvTeaser";
 import { getTodayTasks } from "../utils/todayTasks";
 import { useProfile } from "../hooks/useProfile";
 import { useProgress } from "../hooks/useProgress";
@@ -60,6 +61,8 @@ export default function DashboardPage() {
           development={development}
         />
       ) : null}
+
+      {isProfileComplete ? <DashboardRdvTeaser /> : null}
 
       <DashboardProgressSection
         overallProgress={overallProgress}

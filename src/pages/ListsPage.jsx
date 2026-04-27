@@ -32,7 +32,7 @@ export default function ListsPage() {
         onBack={() => navigate(-1)}
         brandClassName="lists-brand"
         title="Mes listes"
-        subtitle="Retrouve toutes tes checklists au même endroit."
+        subtitle="Listes de préparation (bébé, valise, prénoms…). Les rendez-vous médicaux sont sur l’onglet Rendez-vous."
       />
 
       {isProfileComplete ? (

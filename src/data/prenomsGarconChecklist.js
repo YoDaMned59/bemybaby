@@ -1,0 +1,23 @@
+/** Idées de prénoms garçon — repères courants pour t’aider à choisir. */
+export const prenomsGarconChecklist = [
+  { id: "pg-01", label: "Gabriel", category: "Très courants", checked: false },
+  { id: "pg-02", label: "Raphaël", category: "Très courants", checked: false },
+  { id: "pg-03", label: "Louis", category: "Très courants", checked: false },
+  { id: "pg-04", label: "Léo", category: "Très courants", checked: false },
+  { id: "pg-05", label: "Noah", category: "Très courants", checked: false },
+  { id: "pg-06", label: "Arthur", category: "Très courants", checked: false },
+  { id: "pg-07", label: "Adam", category: "Très courants", checked: false },
+  { id: "pg-08", label: "Jules", category: "Très courants", checked: false },
+  { id: "pg-09", label: "Maël", category: "Très courants", checked: false },
+  { id: "pg-10", label: "Léon", category: "Très courants", checked: false },
+  { id: "pg-11", label: "Liam", category: "Classiques", checked: false },
+  { id: "pg-12", label: "Isaac", category: "Classiques", checked: false },
+  { id: "pg-13", label: "Eden", category: "Classiques", checked: false },
+  { id: "pg-14", label: "Sacha", category: "Classiques", checked: false },
+  { id: "pg-15", label: "Marceau", category: "Classiques", checked: false },
+  { id: "pg-16", label: "Lucas", category: "Classiques", checked: false },
+  { id: "pg-17", label: "Noé", category: "Classiques", checked: false },
+  { id: "pg-18", label: "Gabin", category: "Classiques", checked: false },
+  { id: "pg-19", label: "Mohamed", category: "Classiques", checked: false },
+  { id: "pg-20", label: "Aaron", category: "Classiques", checked: false },
+];

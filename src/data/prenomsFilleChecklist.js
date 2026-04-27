@@ -1,0 +1,23 @@
+/** Idées de prénoms fille — repères courants pour t’aider à choisir. */
+export const prenomsFilleChecklist = [
+  { id: "pf-01", label: "Louise", category: "Très courants", checked: false },
+  { id: "pf-02", label: "Jade", category: "Très courants", checked: false },
+  { id: "pf-03", label: "Ambre", category: "Très courants", checked: false },
+  { id: "pf-04", label: "Alba", category: "Très courants", checked: false },
+  { id: "pf-05", label: "Emma", category: "Très courants", checked: false },
+  { id: "pf-06", label: "Alma", category: "Très courants", checked: false },
+  { id: "pf-07", label: "Romy", category: "Très courants", checked: false },
+  { id: "pf-08", label: "Rose", category: "Très courants", checked: false },
+  { id: "pf-09", label: "Alice", category: "Très courants", checked: false },
+  { id: "pf-10", label: "Anna", category: "Très courants", checked: false },
+  { id: "pf-11", label: "Lou", category: "Classiques", checked: false },
+  { id: "pf-12", label: "Inaya", category: "Classiques", checked: false },
+  { id: "pf-13", label: "Mia", category: "Classiques", checked: false },
+  { id: "pf-14", label: "Adèle", category: "Classiques", checked: false },
+  { id: "pf-15", label: "Lina", category: "Classiques", checked: false },
+  { id: "pf-16", label: "Julia", category: "Classiques", checked: false },
+  { id: "pf-17", label: "Iris", category: "Classiques", checked: false },
+  { id: "pf-18", label: "Agathe", category: "Classiques", checked: false },
+  { id: "pf-19", label: "Giulia", category: "Classiques", checked: false },
+  { id: "pf-20", label: "Charlie", category: "Classiques", checked: false },
+];

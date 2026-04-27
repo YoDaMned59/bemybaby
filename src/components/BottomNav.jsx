@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Home, ListChecks, User } from "lucide-react";
+import { CalendarClock, Home, ListChecks, User } from "lucide-react";
 import "./BottomNav.scss";
 
 export default function BottomNav() {
@@ -24,6 +24,16 @@ export default function BottomNav() {
       >
         <ListChecks />
         <span>Listes</span>
+      </NavLink>
+
+      <NavLink
+        to="/rdv"
+        className={({ isActive }) =>
+          `bottom-nav-link ${isActive ? "active" : ""}`
+        }
+      >
+        <CalendarClock />
+        <span>RDV</span>
       </NavLink>
 
       <NavLink

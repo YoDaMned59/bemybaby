@@ -31,6 +31,12 @@ export default function PrivacyPage() {
           Tu peux effacer ces données à tout moment via les réglages du navigateur
           (suppression des données du site / du stockage local).
         </p>
+        <p>
+          Les <strong>rendez-vous</strong> que tu notes, les <strong>idées de
+          prénoms</strong> cochées et les autres <strong>listes</strong> (valise, etc.)
+          restent elles aussi stockées <strong>localement</strong> : rien n’est
+          synchronisé vers un compte BeMyBaby dans cette version.
+        </p>
       </section>
 
       <section className="privacy-block" aria-labelledby="privacy-analytics-title">
