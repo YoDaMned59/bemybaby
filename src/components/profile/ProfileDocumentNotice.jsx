@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import "./ProfileDocumentNotice.scss";
 
-export default function ProfileDocumentNotice() {
+export default function ProfileDocumentNotice({ showPrivacyLink = true }) {
   return (
     <section className="profile-info-card" aria-labelledby="profile-data-title">
       <h2 id="profile-data-title" className="profile-info-card-title">
@@ -31,9 +32,11 @@ export default function ProfileDocumentNotice() {
         ou le <strong>15</strong> (SAMU — urgence vitale immédiate).
       </p>
 
-      <p className="profile-info-privacy-link">
-        <Link to="/confidentialite">Confidentialité et mesure d’audience</Link>
-      </p>
+      {showPrivacyLink ? (
+        <p className="profile-info-privacy-link">
+          <Link to="/confidentialite">Confidentialité et mesure d’audience</Link>
+        </p>
+      ) : null}
     </section>
   );
 }

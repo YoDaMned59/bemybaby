@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AppPage from "../components/page/AppPage";
 import StackedPageHeader from "../components/page/StackedPageHeader";
 import ProfileForm from "../components/profile/ProfileForm";
-import ProfileDocumentNotice from "../components/profile/ProfileDocumentNotice";
-import ProfileBetaFeedback from "../components/profile/ProfileBetaFeedback";
 import { useProfileForm } from "../hooks/useProfileForm";
 import "./ProfilePage.scss";
 
@@ -28,9 +26,9 @@ export default function ProfilePage() {
         onSubmit={handleSubmit}
       />
 
-      <ProfileDocumentNotice />
-
-      <ProfileBetaFeedback />
+      <p className="profile-footer-privacy-link">
+        <Link to="/confidentialite">Confidentialité et mesure d’audience</Link>
+      </p>
     </AppPage>
   );
 }

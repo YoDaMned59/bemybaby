@@ -7,7 +7,6 @@ import DashboardBabySection from "../components/dashboard/DashboardBabySection";
 import DashboardProgressSection from "../components/dashboard/DashboardProgressSection";
 import DashboardTasksSection from "../components/dashboard/DashboardTasksSection";
 import DashboardDailyTip from "../components/dashboard/DashboardDailyTip";
-import DashboardBetaFeedbackBanner from "../components/dashboard/DashboardBetaFeedbackBanner";
 import DashboardPwaInstall from "../components/dashboard/DashboardPwaInstall";
 import DashboardRdvTeaser from "../components/dashboard/DashboardRdvTeaser";
 import { getTodayTasks } from "../utils/todayTasks";
@@ -46,8 +45,6 @@ export default function DashboardPage() {
       <DashboardListQuickAccess />
 
       {!isProfileComplete ? <DashboardProfileTeaser /> : null}
-
-      <DashboardBetaFeedbackBanner />
 
       <DashboardPwaInstall />
 

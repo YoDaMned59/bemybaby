@@ -241,64 +241,6 @@
   }
 }
 
-/* retour bêta — raccourci depuis l’accueil (après .dashboard-section pour écraser le fond) */
-
-.dashboard-section.dashboard-beta-feedback {
-  background: linear-gradient(180deg, #faf8ff 0%, #fff8fb 100%);
-  border-color: #e8dff5;
-
-  .dashboard-beta-feedback-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  h2 {
-    margin: 0 0 6px;
-    font-size: 17px;
-    font-weight: 800;
-    color: var(--text-main);
-  }
-
-  .dashboard-beta-feedback-lead {
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--text-soft);
-  }
-
-  .dashboard-beta-feedback-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: 14px;
-    font-size: 14px;
-    font-weight: 800;
-    font-family: inherit;
-    text-decoration: none;
-    color: #ffffff;
-    background: linear-gradient(135deg, #f6b29e 0%, #e58d74 52%, #8c6adf 100%);
-    box-shadow: var(--shadow-button);
-    transition: transform 0.18s ease, opacity 0.18s ease, box-shadow 0.18s ease;
-
-    &:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 24px rgba(221, 127, 103, 0.26);
-    }
-
-    &:active {
-      transform: scale(0.98);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--primary-strong);
-      outline-offset: 2px;
-    }
-  }
-}
-
 .dashboard-top-cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
