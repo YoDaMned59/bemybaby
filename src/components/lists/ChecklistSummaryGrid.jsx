@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 
 export default function ChecklistSummaryGrid({ lists, featuredListId }) {
   return (
@@ -7,7 +8,7 @@ export default function ChecklistSummaryGrid({ lists, featuredListId }) {
         const isFeatured = featuredListId && list.id === featuredListId;
         let actionHint = null;
         if (list.progress > 0 && list.progress < 100) {
-          actionHint = "Continuer";
+          actionHint = "Continuer la liste";
         } else if (isFeatured && list.progress === 0) {
           actionHint = "Par ici pour commencer";
         }
@@ -16,18 +17,14 @@ export default function ChecklistSummaryGrid({ lists, featuredListId }) {
           <Link
             key={list.id}
             to={list.path}
-            className={`lists-card${isFeatured ? " lists-card--featured" : ""}`}
+            className={`lists-card${isFeatured ? " lists-card--featured" : ""}${actionHint ? " lists-card--has-callout" : ""}`}
           >
             <div className="lists-card-top">
               <h2>{list.title}</h2>
               <span className="lists-pill">{list.progress}%</span>
             </div>
 
-            {actionHint ? (
-              <p className="lists-card-action-hint">{actionHint}</p>
-            ) : null}
-
-            <p>{list.description}</p>
+            <p className="lists-card-desc">{list.description}</p>
 
             <div className="lists-progress">
               <div
@@ -35,6 +32,17 @@ export default function ChecklistSummaryGrid({ lists, featuredListId }) {
                 style={{ width: `${list.progress}%` }}
               />
             </div>
+
+            {actionHint ? (
+              <div className="lists-card-callout">
+                <span className="lists-card-callout-text">{actionHint}</span>
+                <ChevronRight
+                  className="lists-card-callout-icon"
+                  strokeWidth={2.25}
+                  aria-hidden
+                />
+              </div>
+            ) : null}
           </Link>
         );
       })}
