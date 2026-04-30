@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import AppPage from "../components/page/AppPage";
 import StackedPageHeader from "../components/page/StackedPageHeader";
+import ProfileValueBanner from "../components/profile/ProfileValueBanner";
 import ProfileForm from "../components/profile/ProfileForm";
 import ProfileEmailAuth from "../components/profile/ProfileEmailAuth";
 import { useProfileForm } from "../hooks/useProfileForm";
@@ -18,6 +19,8 @@ export default function ProfilePage() {
         brandClassName="profile-brand"
         title="Mon profil"
       />
+
+      <ProfileValueBanner />
 
       <ProfileForm
         profile={profile}

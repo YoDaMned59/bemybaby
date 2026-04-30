@@ -45,16 +45,13 @@ export default function DashboardAuthTeaser() {
       className="dashboard-section dashboard-auth-teaser"
       aria-labelledby="dashboard-auth-title"
     >
-      <h2 id="dashboard-auth-title">
-        Compte &amp; autre téléphone 📱
-      </h2>
+      <h2 id="dashboard-auth-title">Sauver sur un autre appareil</h2>
       <p className="dashboard-auth-teaser-text">
-        Crée un compte avec ton e-mail ou connecte-toi : le formulaire est sur{" "}
-        <strong>Profil</strong> (icône en bas à droite). Ça conserve ta session
-        actuelle avec la sauvegarde cloud Supabase.
+        Crée un compte ou connecte-toi depuis <strong>Profil</strong> : tes données
+        se synchronisent avec la même session.
       </p>
       <Link to="/profile" className="dashboard-profile-teaser-button">
-        Créer un compte ou me connecter
+        Ouvrir Profil pour le compte
       </Link>
     </section>
   );

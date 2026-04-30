@@ -35,7 +35,10 @@ export default function ProfileForm({
       </button>
 
       {saved ? (
-        <p className="profile-saved-message">Profil enregistré avec succès</p>
+        <p className="profile-saved-message" role="status">
+          C’est enregistré : l’accueil et tes rappels sont à jour. Reviens sur
+          Accueil pour la suite.
+        </p>
       ) : null}
     </form>
   );
