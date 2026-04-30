@@ -238,10 +238,6 @@ export default function AuthWall({ onAuthenticated }) {
               minLength={AUTH_MIN_PASSWORD}
               aria-label="Confirmation du mot de passe"
             />
-            <p className="auth-wall-signup-tip">
-              Le mail de confirmation peut finir dans les indésirables, Spam ou
-              Promotions — vérifie-les après ton inscription.
-            </p>
             <button
               type="submit"
               className="auth-wall-submit auth-wall-submit--primary"
