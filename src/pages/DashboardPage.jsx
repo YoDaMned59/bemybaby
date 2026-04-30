@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import AppPage from "../components/page/AppPage";
 import DashboardHero from "../components/dashboard/DashboardHero";
+import DashboardNextStep from "../components/dashboard/DashboardNextStep";
 import DashboardListQuickAccess from "../components/dashboard/DashboardListQuickAccess";
 import DashboardAuthTeaser from "../components/dashboard/DashboardAuthTeaser";
 import DashboardProfileTeaser from "../components/dashboard/DashboardProfileTeaser";
+import { getProgressHeadline } from "../components/dashboard/dashboardGuidance";
 import DashboardInfoCards from "../components/dashboard/DashboardInfoCards";
 import DashboardBabySection from "../components/dashboard/DashboardBabySection";
 import DashboardProgressSection from "../components/dashboard/DashboardProgressSection";
@@ -16,6 +18,7 @@ import { useProfile } from "../hooks/useProfile";
 import { useProgress } from "../hooks/useProgress";
 import { useCompletedTasks } from "../hooks/useCompletedTasks";
 import { useBabyDevelopment } from "../hooks/useBabyDevelopment";
+import { useAppointments } from "../hooks/useAppointments";
 import "./DashboardPage.scss";
 
 export default function DashboardPage() {
@@ -24,6 +27,7 @@ export default function DashboardPage() {
   }, []);
 
   const {
+    firstName,
     formattedDueDate,
     currentWeek,
     hasDueDate,
@@ -39,20 +43,35 @@ export default function DashboardPage() {
 
   const { completedTasks, completeTask } = useCompletedTasks();
   const { development } = useBabyDevelopment(currentWeek);
+  const { appointments } = useAppointments();
 
   const todayTasks = hasDueDate
     ? getTodayTasks(currentWeek, completedTasks)
     : [];
 
+  const appointmentCount = appointments.length;
+  const progressHeadline = getProgressHeadline(overallProgress);
+
   return (
     <AppPage pageClassName="dashboard-page" containerClassName="dashboard-container">
-      <DashboardHero />
+      <DashboardHero
+        firstName={firstName}
+        isProfileComplete={isProfileComplete}
+        babyProgress={babyProgress}
+        appointmentsCount={appointmentCount}
+      />
+
+      <DashboardNextStep
+        isProfileComplete={isProfileComplete}
+        babyProgress={babyProgress}
+        appointmentsCount={appointmentCount}
+      />
+
+      {!isProfileComplete ? <DashboardProfileTeaser /> : null}
 
       <DashboardListQuickAccess />
 
       <DashboardAuthTeaser />
-
-      {!isProfileComplete ? <DashboardProfileTeaser /> : null}
 
       <DashboardInfoCards
         hasDueDate={hasDueDate}
@@ -74,6 +93,7 @@ export default function DashboardPage() {
         babyProgress={babyProgress}
         maternityBagProgress={maternityBagProgress}
         adminProgress={adminProgress}
+        progressHeadline={progressHeadline}
       />
 
       <DashboardTasksSection

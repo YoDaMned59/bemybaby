@@ -6,6 +6,7 @@ export default function DashboardProgressSection({
   babyProgress,
   maternityBagProgress,
   adminProgress,
+  progressHeadline,
 }) {
   return (
     <section className="dashboard-section">
@@ -16,7 +17,7 @@ export default function DashboardProgressSection({
 
       <ProgressBar progress={overallProgress} />
 
-      <div className="dashboard-subtitle">Tu démarres</div>
+      <div className="dashboard-subtitle">{progressHeadline}</div>
 
       <div className="dashboard-summary-list">
         <Link to="/lists/baby" className="dashboard-summary-item">
