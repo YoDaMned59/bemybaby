@@ -66,7 +66,7 @@ export default function AuthWall({ onAuthenticated }) {
         onAuthenticated();
       } else {
         setInfo(
-          "Si une confirmation par e-mail est requise sur le projet, vérifie ta boîte et clique sur le lien, puis reviens ici et connecte-toi."
+          "Consulte ta boîte e-mail : le message de confirmation peut finir dans les indésirables, dans Spam ou dans Promotions (ex. Gmail) selon ta messagerie. Clique sur le lien dans ce mail, puis reviens sur cette page pour te connecter avec ton mot de passe."
         );
       }
     } finally {
@@ -210,6 +210,10 @@ export default function AuthWall({ onAuthenticated }) {
               disabled={busy}
               minLength={AUTH_MIN_PASSWORD}
             />
+            <p className="auth-wall-signup-tip">
+              Le mail de confirmation peut finir dans les indésirables, Spam ou
+              Promotions — vérifie-les après ton inscription.
+            </p>
             <button
               type="submit"
               className="auth-wall-submit auth-wall-submit--primary"

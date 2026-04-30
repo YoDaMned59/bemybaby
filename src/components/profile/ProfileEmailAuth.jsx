@@ -74,7 +74,7 @@ export default function ProfileEmailAuth() {
         }
         trackAppEvent("account_email_linked", {});
         setSuccessUp(
-          "Compte créé à partir de ta session actuelle — tes données restent sur cette fiche utilisateur. Si la confirmation par e-mail est activée sur le projet, ouvre ta boîte mail et valide le lien."
+          "Compte créé à partir de ta session actuelle — tes données restent sur cette fiche utilisateur. Si tu dois confirmer par e-mail, regarde aussi les indésirables, Spam ou Promotions (ex. Gmail), puis clique sur le lien dans le message."
         );
         setEmailUp("");
         setPassUp("");
