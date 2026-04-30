@@ -28,6 +28,19 @@ export default function ListsPage() {
     };
   });
 
+  const ongoing = lists.filter((l) => l.progress > 0 && l.progress < 100);
+  let featuredListId = null;
+  if (ongoing.length > 0) {
+    featuredListId = ongoing.reduce((best, cur) =>
+      cur.progress > best.progress ? cur : best
+    ).id;
+  } else {
+    const baby = lists.find((l) => l.id === "baby");
+    if (baby && baby.progress === 0) {
+      featuredListId = "baby";
+    }
+  }
+
   return (
     <AppPage pageClassName="lists-page" containerClassName="lists-container">
       <StackedPageHeader
@@ -35,10 +48,10 @@ export default function ListsPage() {
         onBack={() => navigate(-1)}
         brandClassName="lists-brand"
         title="Mes listes"
-        subtitle="Toutes tes listes (bébé, valise, prénoms, démarches) au même endroit. Les rendez-vous médicaux : onglet Rendez-vous."
+        subtitle="Ouvre une liste et coche au fur et à mesure — tout reste dans l’app. Les RDV médicaux : onglet en bas à droite."
       />
 
-      <ChecklistSummaryGrid lists={lists} />
+      <ChecklistSummaryGrid lists={lists} featuredListId={featuredListId} />
     </AppPage>
   );
 }
