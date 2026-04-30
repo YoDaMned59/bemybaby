@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { CalendarClock } from "lucide-react";
 import { useAppointments } from "../../hooks/useAppointments";
 import { getNextRdv } from "../../utils/appointmentsModel";
-import { formatRdvCountdown } from "../../utils/rdvCountdown";
+import { formatRdvLongDate } from "../../utils/rdvCountdown";
 
 export default function DashboardRdvTeaser() {
   const { appointments } = useAppointments();
@@ -34,7 +34,7 @@ export default function DashboardRdvTeaser() {
         <div>
           <h2>Prochain rendez-vous</h2>
           <p className="dashboard-rdv-next-title">{next.title}</p>
-          <p className="dashboard-rdv-countdown">{formatRdvCountdown(next.date)}</p>
+          <p className="dashboard-rdv-countdown">{formatRdvLongDate(next.date)}</p>
           <Link to="/rdv" className="dashboard-rdv-link">
             Voir tout
           </Link>

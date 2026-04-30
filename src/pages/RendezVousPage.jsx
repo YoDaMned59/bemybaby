@@ -107,10 +107,6 @@ export default function RendezVousPage() {
         <h2 className="rdv-h2" id="rdv-tpl-title">
           Suggestions (repères)
         </h2>
-        <p className="rdv-hint">
-          Rédigé à partir des calendres publics (dates exactes = celles inscrites sur ton
-          carnet de santé, ton courrier d’appel, ou conseillées par le médecin / la PMI).
-        </p>
         <ul className="rdv-template-list">
           {APPOINTMENT_TEMPLATES.map((tmpl) => (
             <li key={tmpl.id} className="rdv-template-card">

@@ -28,3 +28,19 @@ export function formatRdvCountdown(iso) {
   }
   return `dans ${n} jours`;
 }
+
+/** @param {string} iso YYYY-MM-DD */
+export function formatRdvLongDate(iso) {
+  if (typeof iso !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) {
+    return "";
+  }
+  const [y, mo, day] = iso.split("-").map(Number);
+  const dt = new Date(y, mo - 1, day);
+  const raw = dt.toLocaleDateString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  return raw.length ? raw.charAt(0).toUpperCase() + raw.slice(1) : "";
+}

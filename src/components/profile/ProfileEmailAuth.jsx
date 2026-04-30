@@ -1,3 +1,4 @@
+import { LogOut } from "lucide-react";
 import { useCallback, useState } from "react";
 import { isSupabaseConfigured } from "../../lib/supabase";
 import { useSupabaseSession } from "../../hooks/useSupabaseSession";
@@ -148,15 +149,16 @@ export default function ProfileEmailAuth() {
     return (
       <section
         className="profile-email-auth profile-email-auth--signout-only"
-        aria-label="Session"
+        aria-label="Fin de session"
       >
         <button
           type="button"
-          className="profile-email-auth-button profile-email-auth-button--ghost"
+          className="profile-email-auth-signout"
           onClick={handleSignOut}
           disabled={busy}
         >
-          Se déconnecter
+          <LogOut className="profile-email-auth-signout-icon" aria-hidden />
+          <span>{busy ? "Déconnexion…" : "Se déconnecter"}</span>
         </button>
       </section>
     );
