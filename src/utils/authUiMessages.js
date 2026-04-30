@@ -37,10 +37,10 @@ export function mapAuthErrorMessage(message) {
     m.includes("too many requests")
   ) {
     return (
-      "Trop de demandes envoyées depuis ton appareil ou ton réseau (protection anti-abus Supabase). " +
-      "Attends environ 30 à 60 minutes, évite les essais répétés en boucle sur « Inscription », puis réessaie. " +
-      "Si ça arrive souvent pendant les tests : dans le tableau de bord Supabase ton projet peut avoir des limites renforcées — " +
-      "vérifie Auth → Rate Limits / protection captcha, ou teste depuis une autre connexion (4G par exemple)."
+      "Trop de demandes envoyées depuis ton réseau (protection anti-abus Supabase). " +
+      "À la maison, le téléphone et l’ordinateur sur le même Wi‑Fi partagent souvent la même adresse Internet : les inscriptions comptent donc ensemble — d’où « le même problème » pour deux personnes. " +
+      "Attends environ 30 à 60 minutes sans recliquer en boucle sur « Inscription », ou passe un des deux téléphones en 4G/5G pour avoir une IP différente. " +
+      "Dans Supabase Dashboard, regarde aussi Auth (limites / captcha) si tu tests beaucoup en prod."
     );
   }
   if (m.includes("password")) {
