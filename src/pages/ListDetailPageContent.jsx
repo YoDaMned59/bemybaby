@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import StackedPageHeader from "../components/page/StackedPageHeader";
 import ChecklistPersonalizeNudge from "../components/list-detail/ChecklistPersonalizeNudge";
+import PwaInstallPrompt from "../components/list-detail/PwaInstallPrompt";
 import ChecklistProgressCard from "../components/list-detail/ChecklistProgressCard";
 import ChecklistCategoryGroups from "../components/list-detail/ChecklistCategoryGroups";
 import { useChecklistDetail } from "../hooks/useChecklistDetail";
@@ -23,6 +24,7 @@ export default function ListDetailPageContent({ listId, locationSearch }) {
     handleAddCustomItem,
     handleRemoveCustomItem,
     toggleGroup,
+    checklistEngagementCount,
   } = useChecklistDetail(listId, locationSearch);
 
   const showPersonalizeNudge = useMemo(
@@ -51,6 +53,8 @@ export default function ListDetailPageContent({ listId, locationSearch }) {
       />
 
       <ChecklistPersonalizeNudge visible={showPersonalizeNudge} />
+
+      <PwaInstallPrompt engagementCount={checklistEngagementCount} />
 
       <ChecklistProgressCard progress={progress} />
 

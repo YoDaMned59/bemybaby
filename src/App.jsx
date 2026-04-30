@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import Ga4Pageview from "./components/Ga4Pageview";
+import PwaInstallListeners from "./components/PwaInstallListeners";
 import DashboardPage from "./pages/DashboardPage";
 import ListsPage from "./pages/ListsPage";
 import ListDetailPage from "./pages/ListDetailPage";
@@ -18,6 +19,7 @@ export default function App() {
   return (
     <>
       <Ga4Pageview />
+      <PwaInstallListeners />
       <Routes>
         <Route path="/" element={<DashboardPage />} />
         <Route path="/rdv" element={<RendezVousPage />} />

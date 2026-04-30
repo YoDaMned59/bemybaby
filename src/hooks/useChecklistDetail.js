@@ -9,6 +9,11 @@ import {
 } from "../utils/checklistItems";
 import { trackAppEvent } from "../utils/appAnalytics";
 import { ENGAGED_MARKER_PREFIX } from "../utils/funnelAnalytics";
+import {
+  bumpChecklistCheckboxEngagements,
+  bumpSignificantChecklistEngagementAlternative,
+  PWA_CHECKS_KEY,
+} from "../utils/pwaInstallPersistence";
 import { readStorage, writeStorage } from "../utils/storage";
 
 export function useChecklistDetail(listId, locationSearch) {
@@ -58,6 +63,14 @@ export function useChecklistDetail(listId, locationSearch) {
   const [expandedGroups, setExpandedGroups] = useState({});
   const [lastExpansionSyncKey, setLastExpansionSyncKey] = useState(null);
 
+  const [engageRenderKey, bumpEngagementRenderKey] = useState(0);
+
+  const checklistEngagementCount = useMemo(() => {
+    const v = readStorage(PWA_CHECKS_KEY, 0);
+    return typeof v === "number" && !Number.isNaN(v) ? v : 0;
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- recalculer quand liste ou score local bouge (engageRenderKey)
+  }, [engageRenderKey, listId]);
+
   if (lastExpansionSyncKey !== expansionSyncKey) {
     setLastExpansionSyncKey(expansionSyncKey);
     setExpandedGroups((prev) =>
@@ -94,11 +107,19 @@ export function useChecklistDetail(listId, locationSearch) {
       return;
     }
 
+    const prevItem = items.find((i) => i.id === itemId);
+    const wasChecked = prevItem?.checked === true;
+
     const prevProgress = getChecklistProgressPercent(items);
     const updatedItems = items.map((item) =>
       item.id === itemId ? { ...item, checked: !item.checked } : item
     );
     const nextProgress = getChecklistProgressPercent(updatedItems);
+
+    if (prevItem && !wasChecked) {
+      bumpChecklistCheckboxEngagements();
+      bumpEngagementRenderKey((k) => k + 1);
+    }
 
     if (prevProgress === 0 && nextProgress > 0) {
       const markerKey = `${ENGAGED_MARKER_PREFIX}${listConfig.storageKey}`;
@@ -141,6 +162,10 @@ export function useChecklistDetail(listId, locationSearch) {
     };
 
     persist([...items, newItem]);
+
+    bumpSignificantChecklistEngagementAlternative();
+    bumpEngagementRenderKey((k) => k + 1);
+
     trackAppEvent("checklist_custom_item_added", {
       list_id: listConfig.id,
     });
@@ -173,5 +198,6 @@ export function useChecklistDetail(listId, locationSearch) {
     handleAddCustomItem,
     handleRemoveCustomItem,
     toggleGroup,
+    checklistEngagementCount,
   };
 }
