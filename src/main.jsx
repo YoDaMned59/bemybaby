@@ -1,4 +1,3 @@
-import "./utils/umamiBootstrap";
 import "./utils/ga4Bootstrap";
 import "./utils/installPromptCapture";
 import React from "react";

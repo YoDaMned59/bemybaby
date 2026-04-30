@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Ga4Pageview from "./components/Ga4Pageview";
 import DashboardPage from "./pages/DashboardPage";
@@ -6,8 +7,13 @@ import ListDetailPage from "./pages/ListDetailPage";
 import ProfilePage from "./pages/ProfilePage";
 import PrivacyPage from "./pages/PrivacyPage";
 import RendezVousPage from "./pages/RendezVousPage";
+import { trackReturningUserSession } from "./utils/funnelAnalytics";
 
 export default function App() {
+  useEffect(() => {
+    trackReturningUserSession();
+  }, []);
+
   return (
     <BrowserRouter>
       <Ga4Pageview />

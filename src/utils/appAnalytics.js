@@ -48,60 +48,18 @@ function sendGa4Event(name, properties) {
   }
 }
 
-function isUmamiTrackingEnabled() {
-  const id = import.meta.env.VITE_UMAMI_WEBSITE_ID;
-  if (!id || import.meta.env.VITE_DISABLE_UMAMI === "true") {
-    return false;
-  }
-  if (import.meta.env.PROD) {
-    return true;
-  }
-  return import.meta.env.VITE_UMAMI_DEV === "true";
-}
-
-function sendUmamiEvent(name, properties) {
-  if (!isUmamiTrackingEnabled()) {
-    return;
-  }
-
-  const run = () => {
-    const umami = typeof window !== "undefined" ? window.umami : null;
-    if (!umami || typeof umami.track !== "function") {
-      return false;
-    }
-    try {
-      if (properties && Object.keys(properties).length > 0) {
-        umami.track(name, properties);
-      } else {
-        umami.track(name);
-      }
-    } catch {
-      return false;
-    }
-    return true;
-  };
-
-  if (run()) {
-    return;
-  }
-  window.setTimeout(run, 1000);
-}
-
 /**
- * Événements agrégés (Vercel, Umami, GA4 si `VITE_GA_MEASUREMENT_ID`). Aucun prénom, date ni contenu de liste.
+ * Événements agrégés (Vercel + GA4 si `VITE_GA_MEASUREMENT_ID`). Aucun prénom, date ni contenu de liste.
  *
- * **Suivi hebdo (suggestion)** — dans GA4 : Rapports → Engagement → Événements, filtre 7 jours.
- * Marquer comme « événement clé » (Admin → Événements) pour le tunnel : `profile_saved` (complete),
- * `list_checklist_open`, `checklist_milestone` (milestone 100), `rdv_added`.
+ * **Tunnel produit (GA4 Exploration ou BigQuery)** — ordre conseillé :
+ * `landing_view` → `profile_started` → `profile_saved` → `lists_viewed` → `checklist_opened` →
+ * `list_created` (premier cochet sur une liste template) → `rdv_viewed` → `rdv_created`, plus `returning_user`.
  *
- * | name | rôle |
- * |------|------|
- * | `profile_saved` | Profil enregistré (`complete` : prénom + date) |
- * | `list_checklist_open` | Ouverture d’une liste (checklist) |
- * | `checklist_milestone` | Palier 25 / 50 / 75 / 100 % (`list_id`, `milestone`) |
- * | `checklist_custom_item_added` | Item personnalisé ajouté |
- * | `rdv_added` | RDV ajouté (`from_template`) |
- * | `rdv_removed` | RDV retiré |
+ * **Événements d’activation / qualité**
+ * — `profile_saved` (`complete` : prénom + date prévue).
+ * — `checklist_opened` : ouverture d’une liste ; remplace historiquement `list_checklist_open`.
+ * — `checklist_milestone` : palier 25 / 50 / 75 / 100 % (`list_id`, `milestone`).
+ * — `checklist_custom_item_added` — `rdv_created` (`from_template`) — `rdv_removed`.
  *
  * @param {string} name
  * @param {Record<string, string | number | boolean | null | undefined>} [properties]
@@ -116,6 +74,4 @@ export function trackAppEvent(name, properties) {
       // Ne pas bloquer l’app si le script analytics n’est pas prêt.
     }
   }
-
-  sendUmamiEvent(name, properties);
 }

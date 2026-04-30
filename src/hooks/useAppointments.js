@@ -49,7 +49,7 @@ export function useAppointments() {
       persistList(next);
       return next;
     });
-    trackAppEvent("rdv_added", { from_template: true });
+    trackAppEvent("rdv_created", { from_template: true });
   }, []);
 
   const addCustom = useCallback((title, date) => {
@@ -71,7 +71,7 @@ export function useAppointments() {
       persistList(next);
       return next;
     });
-    trackAppEvent("rdv_added", { from_template: false });
+    trackAppEvent("rdv_created", { from_template: false });
   }, []);
 
   const updateDate = useCallback((id, newDate) => {

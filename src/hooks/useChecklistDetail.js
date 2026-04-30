@@ -8,7 +8,8 @@ import {
   mergeExpandedGroups,
 } from "../utils/checklistItems";
 import { trackAppEvent } from "../utils/appAnalytics";
-import { writeStorage } from "../utils/storage";
+import { ENGAGED_MARKER_PREFIX } from "../utils/funnelAnalytics";
+import { readStorage, writeStorage } from "../utils/storage";
 
 export function useChecklistDetail(listId, locationSearch) {
   const listConfig = getChecklistById(listId);
@@ -98,6 +99,14 @@ export function useChecklistDetail(listId, locationSearch) {
       item.id === itemId ? { ...item, checked: !item.checked } : item
     );
     const nextProgress = getChecklistProgressPercent(updatedItems);
+
+    if (prevProgress === 0 && nextProgress > 0) {
+      const markerKey = `${ENGAGED_MARKER_PREFIX}${listConfig.storageKey}`;
+      if (readStorage(markerKey, false) !== true) {
+        writeStorage(markerKey, true);
+        trackAppEvent("list_created", { list_id: listConfig.id });
+      }
+    }
 
     persist(updatedItems);
 

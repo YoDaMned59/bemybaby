@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppPage from "../components/page/AppPage";
 import StackedPageHeader from "../components/page/StackedPageHeader";
@@ -8,6 +8,7 @@ import {
 } from "../data/appointmentsTemplates";
 import { useAppointments } from "../hooks/useAppointments";
 import { formatRdvCountdown } from "../utils/rdvCountdown";
+import { trackAppEvent } from "../utils/appAnalytics";
 import "./RendezVousPage.scss";
 
 function formatLongDate(iso) {
@@ -34,6 +35,10 @@ export default function RendezVousPage() {
     toggleCompleted,
     removeOne,
   } = useAppointments();
+
+  useEffect(() => {
+    trackAppEvent("rdv_viewed", {});
+  }, []);
 
   const [titleDraft, setTitleDraft] = useState("");
   const [dateDraft, setDateDraft] = useState(() => {

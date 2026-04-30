@@ -34,7 +34,7 @@ export default function ListDetailPageContent({ listId, locationSearch }) {
     if (!listConfig) {
       return;
     }
-    trackAppEvent("list_checklist_open", { list_id: listConfig.id });
+    trackAppEvent("checklist_opened", { list_id: listConfig.id });
   }, [listConfig]);
 
   if (!listConfig) {

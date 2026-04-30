@@ -1,12 +1,18 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AppPage from "../components/page/AppPage";
 import StackedPageHeader from "../components/page/StackedPageHeader";
 import ChecklistSummaryGrid from "../components/lists/ChecklistSummaryGrid";
 import { useProgress } from "../hooks/useProgress";
 import { CHECKLIST_IDS, CHECKLISTS } from "../data/checklistsConfig";
+import { trackAppEvent } from "../utils/appAnalytics";
 import "./ListsPage.scss";
 
 export default function ListsPage() {
+  useEffect(() => {
+    trackAppEvent("lists_viewed", {});
+  }, []);
+
   const navigate = useNavigate();
   const { progressById } = useProgress();
 

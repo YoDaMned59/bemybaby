@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { trackAppEvent } from "../utils/appAnalytics";
 import { readStorage, writeStorage } from "../utils/storage";
 import { EMPTY_PROFILE, normalizeProfileInput } from "../utils/profileModel";
@@ -9,7 +9,14 @@ export function useProfileForm() {
   );
   const [saved, setSaved] = useState(false);
 
+  const startedRef = useRef(false);
+
   function handleChange(event) {
+    if (!startedRef.current) {
+      startedRef.current = true;
+      trackAppEvent("profile_started", {});
+    }
+
     const { name, value } = event.target;
 
     setProfile((prev) => ({

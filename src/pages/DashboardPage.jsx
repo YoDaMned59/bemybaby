@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import AppPage from "../components/page/AppPage";
 import DashboardHero from "../components/dashboard/DashboardHero";
 import DashboardListQuickAccess from "../components/dashboard/DashboardListQuickAccess";
@@ -9,6 +10,7 @@ import DashboardTasksSection from "../components/dashboard/DashboardTasksSection
 import DashboardDailyTip from "../components/dashboard/DashboardDailyTip";
 import DashboardPwaInstall from "../components/dashboard/DashboardPwaInstall";
 import DashboardRdvTeaser from "../components/dashboard/DashboardRdvTeaser";
+import { trackLandingViewIfFirstThisSession } from "../utils/funnelAnalytics";
 import { getTodayTasks } from "../utils/todayTasks";
 import { useProfile } from "../hooks/useProfile";
 import { useProgress } from "../hooks/useProgress";
@@ -17,6 +19,10 @@ import { useBabyDevelopment } from "../hooks/useBabyDevelopment";
 import "./DashboardPage.scss";
 
 export default function DashboardPage() {
+  useEffect(() => {
+    trackLandingViewIfFirstThisSession();
+  }, []);
+
   const {
     formattedDueDate,
     currentWeek,
