@@ -43,7 +43,7 @@ export default function DashboardHero({
         </Link>
         <Link
           to={primary.secondaryTo}
-          className="dashboard-hero-link-secondary"
+          className="dashboard-hero-button dashboard-hero-button--primary"
         >
           {primary.secondaryHint}
         </Link>

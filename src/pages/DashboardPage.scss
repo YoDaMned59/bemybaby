@@ -46,31 +46,14 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-  }
-
-  .dashboard-hero-link-secondary {
-    align-self: center;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--primary-strong);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-
-    &:hover {
-      opacity: 0.9;
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--primary-strong);
-      outline-offset: 2px;
-      border-radius: 4px;
-    }
+    width: 100%;
   }
 
   .dashboard-hero-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     min-height: 48px;
     padding: 12px 18px;
     border-radius: var(--radius-md);
@@ -84,42 +67,25 @@
 
   .dashboard-hero-button--primary {
     color: #ffffff;
-    background: linear-gradient(135deg, #f6b29e 0%, #e58d74 52%, #8c6adf 100%);
+    background: linear-gradient(
+      135deg,
+      var(--accent) 0%,
+      var(--accent-strong) 48%,
+      var(--primary) 100%
+    );
     box-shadow: var(--shadow-button);
     border: none;
 
     &:hover {
       transform: translateY(-1px);
-      box-shadow: 0 12px 24px rgba(221, 127, 103, 0.26);
+      filter: brightness(1.02);
+      box-shadow:
+        0 12px 26px rgba(221, 127, 103, 0.22),
+        0 6px 14px rgba(118, 85, 207, 0.12);
     }
 
     &:active {
       transform: scale(0.98);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--primary-strong);
-      outline-offset: 2px;
-    }
-  }
-
-  .dashboard-hero-button--secondary {
-    min-height: 44px;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-soft);
-    background: var(--card-soft);
-    border: 1px solid var(--border);
-    box-shadow: 0 4px 12px rgba(201, 110, 87, 0.06);
-
-    &:hover {
-      background: #fffdfb;
-      border-color: #e0cfc7;
-      color: var(--text-main);
-    }
-
-    &:active {
-      transform: scale(0.99);
     }
 
     &:focus-visible {
