@@ -31,6 +31,18 @@ export function mapAuthErrorMessage(message) {
   if (m.includes("email not confirmed")) {
     return "Confirme d’abord ton adresse via le lien reçu par e-mail, puis réessaie.";
   }
+  if (
+    m.includes("rate limit") ||
+    m.includes("429") ||
+    m.includes("too many requests")
+  ) {
+    return (
+      "Trop de demandes envoyées depuis ton appareil ou ton réseau (protection anti-abus Supabase). " +
+      "Attends environ 30 à 60 minutes, évite les essais répétés en boucle sur « Inscription », puis réessaie. " +
+      "Si ça arrive souvent pendant les tests : dans le tableau de bord Supabase ton projet peut avoir des limites renforcées — " +
+      "vérifie Auth → Rate Limits / protection captcha, ou teste depuis une autre connexion (4G par exemple)."
+    );
+  }
   if (m.includes("password")) {
     return "Mot de passe refusé par le serveur (longueur ou règles).";
   }
