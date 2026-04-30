@@ -1,22 +1,16 @@
 import { Link } from "react-router-dom";
 
-function listActionHint(progress) {
-  if (progress <= 0) {
-    return "Par ici pour commencer";
-  }
-  if (progress < 100) {
-    return "Continuer";
-  }
-  return null;
-}
-
 export default function ChecklistSummaryGrid({ lists, featuredListId }) {
   return (
     <section className="lists-grid">
       {lists.map((list) => {
         const isFeatured = featuredListId && list.id === featuredListId;
-        const actionHint =
-          isFeatured && list.progress < 100 ? listActionHint(list.progress) : null;
+        let actionHint = null;
+        if (list.progress > 0 && list.progress < 100) {
+          actionHint = "Continuer";
+        } else if (isFeatured && list.progress === 0) {
+          actionHint = "Par ici pour commencer";
+        }
 
         return (
           <Link
