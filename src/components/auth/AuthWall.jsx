@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { getSupabase } from "../../lib/supabase";
 import {
   AUTH_MIN_PASSWORD,
@@ -22,6 +22,14 @@ export default function AuthWall({ onAuthenticated }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [info, setInfo] = useState("");
+  /** Évite que le navigateur pré-remplisse l’inscription avec l’identifiant connexion au premier rendu. */
+  const [signupShieldAutofill, setSignupShieldAutofill] = useState(true);
+
+  useEffect(() => {
+    if (mode === "signup") {
+      setSignupShieldAutofill(true);
+    }
+  }, [mode]);
 
   async function handleSignup(e) {
     e.preventDefault();
@@ -132,6 +140,9 @@ export default function AuthWall({ onAuthenticated }) {
               setMode("signup");
               setError("");
               setInfo("");
+              setEmailUp("");
+              setPassUp("");
+              setPassUp2("");
             }}
           >
             Inscription
@@ -171,24 +182,38 @@ export default function AuthWall({ onAuthenticated }) {
         ) : null}
 
         {mode === "signup" ? (
-          <form className="auth-wall-form" onSubmit={handleSignup}>
+          <form
+            className="auth-wall-form"
+            onSubmit={handleSignup}
+            autoComplete="off"
+          >
             <label className="auth-wall-label" htmlFor="authwall-email-up">
               E-mail
             </label>
             <input
               id="authwall-email-up"
+              name="beMyBabySignupEmail"
               className="auth-wall-input"
               type="email"
-              autoComplete="email"
+              inputMode="email"
+              autoComplete="section-inscription email"
               value={emailUp}
+              readOnly={signupShieldAutofill}
               onChange={(ev) => setEmailUp(ev.target.value)}
+              onFocus={() => {
+                if (signupShieldAutofill) {
+                  setSignupShieldAutofill(false);
+                }
+              }}
               disabled={busy}
+              aria-label="E-mail pour inscription"
             />
             <label className="auth-wall-label" htmlFor="authwall-pass-up">
               Mot de passe
             </label>
             <input
               id="authwall-pass-up"
+              name="password-new"
               className="auth-wall-input"
               type="password"
               autoComplete="new-password"
@@ -196,12 +221,14 @@ export default function AuthWall({ onAuthenticated }) {
               onChange={(ev) => setPassUp(ev.target.value)}
               disabled={busy}
               minLength={AUTH_MIN_PASSWORD}
+              aria-label="Mot de passe choisi pour inscription"
             />
             <label className="auth-wall-label" htmlFor="authwall-pass-up2">
               Confirmer le mot de passe
             </label>
             <input
               id="authwall-pass-up2"
+              name="confirm-password-new"
               className="auth-wall-input"
               type="password"
               autoComplete="new-password"
@@ -209,6 +236,7 @@ export default function AuthWall({ onAuthenticated }) {
               onChange={(ev) => setPassUp2(ev.target.value)}
               disabled={busy}
               minLength={AUTH_MIN_PASSWORD}
+              aria-label="Confirmation du mot de passe"
             />
             <p className="auth-wall-signup-tip">
               Le mail de confirmation peut finir dans les indésirables, Spam ou
@@ -223,27 +251,35 @@ export default function AuthWall({ onAuthenticated }) {
             </button>
           </form>
         ) : (
-          <form className="auth-wall-form" onSubmit={handleSignin}>
+          <form
+            className="auth-wall-form"
+            onSubmit={handleSignin}
+            autoComplete="on"
+          >
             <label className="auth-wall-label" htmlFor="authwall-email-in">
               E-mail
             </label>
             <input
               id="authwall-email-in"
+              name="beMyBabyLoginEmail"
               className="auth-wall-input"
               type="email"
-              autoComplete="username"
+              inputMode="email"
+              autoComplete="section-connexion username"
               value={emailIn}
               onChange={(ev) => setEmailIn(ev.target.value)}
               disabled={busy}
+              aria-label="E-mail pour connexion"
             />
             <label className="auth-wall-label" htmlFor="authwall-pass-in">
               Mot de passe
             </label>
             <input
               id="authwall-pass-in"
+              name="password"
               className="auth-wall-input"
               type="password"
-              autoComplete="current-password"
+              autoComplete="section-connexion current-password"
               value={passIn}
               onChange={(ev) => setPassIn(ev.target.value)}
               disabled={busy}
