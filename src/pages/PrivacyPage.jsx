@@ -1,10 +1,36 @@
-import { useNavigate } from "react-router-dom";
+import { createElement } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AppPage from "../components/page/AppPage";
 import StackedPageHeader from "../components/page/StackedPageHeader";
-import ProfileDocumentNotice from "../components/profile/ProfileDocumentNotice";
+import {
+  AlertTriangle,
+  BarChart3,
+  Cloud,
+  Heart,
+  Lock,
+  Shield,
+} from "lucide-react";
 import "./PrivacyPage.scss";
 
 const VERCEL_PRIVACY = "https://vercel.com/legal/privacy-policy";
+
+function PrivacySection({ id, icon, title, children }) {
+  return (
+    <section
+      className="privacy-card"
+      aria-labelledby={id}
+      id={id ? `${id}-section` : undefined}
+    >
+      <div className="privacy-card-heading">
+        <span className="privacy-card-icon" aria-hidden>
+          {createElement(icon, { strokeWidth: 2 })}
+        </span>
+        <h2 id={id}>{title}</h2>
+      </div>
+      <div className="privacy-card-body">{children}</div>
+    </section>
+  );
+}
 
 export default function PrivacyPage() {
   const navigate = useNavigate();
@@ -13,75 +39,116 @@ export default function PrivacyPage() {
     <AppPage pageClassName="privacy-page" containerClassName="privacy-container">
       <StackedPageHeader
         sectionClassName="privacy-header"
+        brandClassName="privacy-brand"
         onBack={() => navigate(-1)}
         title="Confidentialité"
-        subtitle="Comment BeMyBaby traite tes informations et la mesure d’audience."
+        subtitle="BeMyBaby respecte ta vie privée — voici l’essentiel, sans jargon inutile."
       />
 
-      <ProfileDocumentNotice showPrivacyLink={false} />
+      <PrivacySection id="privacy-summary" icon={Lock} title="En bref">
+        <ul className="privacy-list">
+          <li>
+            Tes informations (<strong>profil</strong>, <strong>listes</strong>,{" "}
+            <strong>rendez-vous</strong>) servent uniquement à faire fonctionner l’application.
+          </li>
+          <li>
+            Elles sont traitées avec soin, <strong>jamais revendues</strong>, et pas utilisées pour
+            de la publicité ciblée sur ton prénom ou le détail de tes listes.
+          </li>
+          <li>
+            La mesure d’audience (si elle est active) reste{" "}
+            <strong>anonymisée et agrégée</strong>, pour comprendre l’usage général du service.
+          </li>
+        </ul>
+      </PrivacySection>
 
-      <section className="privacy-block" aria-labelledby="privacy-local-title">
-        <h2 id="privacy-local-title">Données dans l’application</h2>
-        <p>
-          Les <strong>rendez-vous</strong> que tu notes, les <strong>idées de
-          prénoms</strong> cochées et les autres <strong>listes</strong> (valise, etc.)
-          sont d’abord enregistrés <strong>localement</strong> dans ton navigateur
-          (<strong>localStorage</strong>).
-        </p>
-        <p>
-          Si l’éditeur a activé une <strong>synchronisation Supabase</strong>, une copie de
-          ces données peut être transférée de façon chiffrée en transit vers un projet
-          hébergé chez Supabase (souvent en Europe selon les réglages du projet), liée à un{" "}
-          <strong>compte utilisateur anonyme</strong>. Objectif : retrouver ton suivi depuis
-          un autre appareil, pas du ciblage publicitaire. Voir la{" "}
-          <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">
-            politique de confidentialité de Supabase (en anglais)
-          </a>
-          .
-        </p>
-        <p>
-          Tu peux te <strong>créer un compte ou te connecter</strong> depuis l’entrée de
-          l’application ou depuis la page <strong>Profil</strong>. Quand une authentification
-          obligatoire par e-mail est activée avec la synchro Supabase, l’accès au suivi peut
-          exiger cette étape avant d’accéder à l’app ; sinon tu peux relier une adresse plus
-          tard depuis le profil (réglages Supabase&nbsp;/&nbsp;Auth et variables frontend).
-        </p>
-      </section>
+      <PrivacySection id="privacy-data" icon={Heart} title="Tes données">
+        <ul className="privacy-list">
+          <li>
+            <strong>Listes</strong>, <strong>profil</strong> et{" "}
+            <strong>rendez-vous</strong> sont d’abord enregistrés{" "}
+            <strong>dans ton navigateur</strong> (stockage local sur ton appareil).
+          </li>
+          <li>
+            Si la <strong>synchronisation cloud Supabase</strong> est activée pour le projet, une copie peut être
+            associée à ton compte (connexion depuis <strong>Profil</strong>) pour retrouver ton suivi ailleurs — en
+            transit chiffré, au service du produit uniquement.
+          </li>
+          <li>
+            Politique hébergeur :{" "}
+            <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">
+              Supabase — confidentialité (en anglais)
+            </a>
+            .
+          </li>
+        </ul>
+      </PrivacySection>
 
-      <section className="privacy-block" aria-labelledby="privacy-analytics-title">
-        <h2 id="privacy-analytics-title">Mesure d’audience</h2>
-        <p>
-          Si l’application est hébergée sur <strong>Vercel</strong> et que{" "}
-          <strong>Web Analytics</strong> est activé dans le projet, des indicateurs{" "}
-          <strong>agrégés</strong> peuvent être collectés (par exemple pages consultées,
-          pays ou type d’appareil, de façon anonymisée). Cela sert à estimer l’usage global
-          de l’app.
-        </p>
-        <p>
-          Les <strong>événements d’analytics</strong> envoyés sont des métriques techniques (par
-          exemple pages vues ou type d’interaction), selon réglages,{" "}
-          <strong>sans être</strong> une copie textuelle de tes champs utilisateur destinée aux
-          outils de mesure. Ne pas les confondre avec la donnée fonctionnelle (profil, listes…)
-          stockée localement puis, si configuré, sur Supabase uniquement au service du produit.
-        </p>
-        <p>
-          <a href={VERCEL_PRIVACY} target="_blank" rel="noopener noreferrer">
-            Politique de confidentialité de Vercel (en anglais)
-          </a>
-        </p>
-      </section>
+      <PrivacySection id="privacy-sync" icon={Cloud} title="Sauvegarde et compte">
+        <ul className="privacy-list">
+          <li>
+            Sans compte ou sans synchro cloud, tes données suivent cet appareil / ce navigateur. Les
+            effacer ou changer d’environnement peut faire <strong>perdre</strong> l’historique local.
+          </li>
+          <li>
+            Avec un <strong>compte e-mail</strong> configuré dans l’app, tu peux retrouver ta session depuis un
+            autre téléphone après connexion.
+          </li>
+          <li>
+            <Link to="/profile" className="privacy-inline-cta">
+              Ouvrir Profil — compte et sauvegarde
+            </Link>
+          </li>
+        </ul>
+      </PrivacySection>
 
-      <section className="privacy-block" aria-labelledby="privacy-rights-title">
-        <h2 id="privacy-rights-title">Tes droits (rappel)</h2>
-        <p>
-          Pour toute question sur les données traitées par les hébergeurs (
-          <strong>Vercel</strong>, <strong>Supabase</strong> si synchro cloud) ou l’outil
-          d’analyse (<strong>GA4</strong> si activé), contacte l’éditeur ou consulte les
-          documents légaux correspondants. Pour les données encore uniquement sur ton
-          appareil dans le navigateur, tu restes maître du stockage sur ton téléphone ou ton
-          ordinateur.
+      <PrivacySection id="privacy-analytics" icon={BarChart3} title="Mesure d’audience">
+        <ul className="privacy-list">
+          <li>
+            Des outils du type <strong>Web Analytics / GA4</strong> (selon la configuration du déploiement)
+            peuvent mesurer des indicateurs <strong>techniques et agrégés</strong> : pages vues, type
+            d’appareil, pays approximatif, etc.
+          </li>
+          <li>
+            Ce n’est <strong>pas</strong> une copie de tes champs personnels à des fins publicitaires.
+          </li>
+          <li>
+            <a href={VERCEL_PRIVACY} target="_blank" rel="noopener noreferrer">
+              Vercel — politique de confidentialité (en anglais)
+            </a>
+          </li>
+        </ul>
+      </PrivacySection>
+
+      <PrivacySection id="privacy-health" icon={AlertTriangle} title="Information importante">
+        <p className="privacy-lead">
+          BeMyBaby est un <strong>outil d’organisation</strong>. Il ne remplace pas les conseils d’un{" "}
+          <strong>professionnel de santé</strong>, les démarches officielles (Assurance maladie, CAF, etc.) ni
+          les urgences.
         </p>
-      </section>
+        <p className="privacy-lead privacy-lead--tight">
+          En cas de doute sur ta santé ou celle de bébé, ou en cas d’urgence : contacte un{" "}
+          <strong>professionnel de santé</strong> ou le <strong>15</strong> (SAMU — urgence vitale immédiate).
+        </p>
+      </PrivacySection>
+
+      <PrivacySection id="privacy-rights" icon={Shield} title="Tes droits">
+        <ul className="privacy-list">
+          <li>
+            Tu peux demander la <strong>suppression</strong> des données liées à ton compte cloud en passant
+            par les réglages du service (hébergeur / support du projet) et en te déconnectant depuis l’app.
+          </li>
+          <li>
+            Pour les données uniquement sur ton appareil, tu peux les effacer via les paramètres du
+            navigateur (données du site).
+          </li>
+        </ul>
+        <p className="privacy-footer-links">
+          <Link to="/" className="privacy-footer-link">
+            Retour à l’accueil
+          </Link>
+        </p>
+      </PrivacySection>
     </AppPage>
   );
 }
