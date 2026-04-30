@@ -42,6 +42,28 @@
   }
 }
 
+.privacy-reassurance {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: -4px 0 14px;
+  padding: 12px 14px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #fff9fb 0%, #fdf6ff 100%);
+  border: 1px solid rgba(237, 199, 210, 0.65);
+  box-shadow: 0 8px 20px rgba(201, 110, 87, 0.07);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--text-main);
+}
+
+.privacy-reassurance-emoji {
+  flex-shrink: 0;
+  font-size: 1.25em;
+  line-height: 1;
+}
+
 .privacy-card {
   background: var(--card);
   border-radius: var(--radius-xl);

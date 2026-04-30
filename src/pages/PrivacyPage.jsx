@@ -45,6 +45,13 @@ export default function PrivacyPage() {
         subtitle="BeMyBaby respecte ta vie privée — voici l’essentiel, sans jargon inutile."
       />
 
+      <p className="privacy-reassurance" role="status">
+        <span className="privacy-reassurance-emoji" aria-hidden>
+          🧡
+        </span>
+        <span>Tes données restent à toi.</span>
+      </p>
+
       <PrivacySection id="privacy-summary" icon={Lock} title="En bref">
         <ul className="privacy-list">
           <li>
@@ -70,14 +77,14 @@ export default function PrivacyPage() {
             <strong>dans ton navigateur</strong> (stockage local sur ton appareil).
           </li>
           <li>
-            Si la <strong>synchronisation cloud Supabase</strong> est activée pour le projet, une copie peut être
-            associée à ton compte (connexion depuis <strong>Profil</strong>) pour retrouver ton suivi ailleurs — en
-            transit chiffré, au service du produit uniquement.
+            Si une <strong>sauvegarde sécurisée dans le cloud</strong> est activée pour le projet, une copie peut
+            être associée à ton compte (connexion depuis <strong>Profil</strong>) pour retrouver ton suivi ailleurs
+            — en transit chiffré, au service du produit uniquement.
           </li>
           <li>
-            Politique hébergeur :{" "}
+            Transparence : l’infrastructure peut s’appuyer sur{" "}
             <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">
-              Supabase — confidentialité (en anglais)
+              Supabase — politique de confidentialité (en anglais)
             </a>
             .
           </li>
@@ -87,8 +94,8 @@ export default function PrivacyPage() {
       <PrivacySection id="privacy-sync" icon={Cloud} title="Sauvegarde et compte">
         <ul className="privacy-list">
           <li>
-            Sans compte ou sans synchro cloud, tes données suivent cet appareil / ce navigateur. Les
-            effacer ou changer d’environnement peut faire <strong>perdre</strong> l’historique local.
+            Sans compte ou sans sauvegarde cloud, tes données restent sur cet appareil / ce navigateur.{" "}
+            <strong>Si tu changes d’appareil sans compte, certaines données peuvent ne pas être conservées.</strong>
           </li>
           <li>
             Avec un <strong>compte e-mail</strong> configuré dans l’app, tu peux retrouver ta session depuis un
@@ -105,17 +112,18 @@ export default function PrivacyPage() {
       <PrivacySection id="privacy-analytics" icon={BarChart3} title="Mesure d’audience">
         <ul className="privacy-list">
           <li>
-            Des outils du type <strong>Web Analytics / GA4</strong> (selon la configuration du déploiement)
-            peuvent mesurer des indicateurs <strong>techniques et agrégés</strong> : pages vues, type
-            d’appareil, pays approximatif, etc.
+            Des <strong>outils de mesure d’audience</strong> (selon la configuration du déploiement) peuvent
+            collecter des indicateurs <strong>techniques et agrégés</strong> : pages vues, type d’appareil, pays
+            approximatif, etc.
           </li>
           <li>
             Ce n’est <strong>pas</strong> une copie de tes champs personnels à des fins publicitaires.
           </li>
           <li>
             <a href={VERCEL_PRIVACY} target="_blank" rel="noopener noreferrer">
-              Vercel — politique de confidentialité (en anglais)
+              En savoir plus — politique de confidentialité Vercel (en anglais)
             </a>
+            .
           </li>
         </ul>
       </PrivacySection>
@@ -133,16 +141,13 @@ export default function PrivacyPage() {
       </PrivacySection>
 
       <PrivacySection id="privacy-rights" icon={Shield} title="Tes droits">
-        <ul className="privacy-list">
-          <li>
-            Tu peux demander la <strong>suppression</strong> des données liées à ton compte cloud en passant
-            par les réglages du service (hébergeur / support du projet) et en te déconnectant depuis l’app.
-          </li>
-          <li>
-            Pour les données uniquement sur ton appareil, tu peux les effacer via les paramètres du
-            navigateur (données du site).
-          </li>
-        </ul>
+        <p className="privacy-lead">
+          Tu peux demander la <strong>suppression</strong> de tes données à tout moment.
+        </p>
+        <p className="privacy-lead privacy-lead--tight">
+          Tu peux aussi <strong>effacer les données locales</strong> depuis les paramètres de ton navigateur
+          (données du site).
+        </p>
         <p className="privacy-footer-links">
           <Link to="/" className="privacy-footer-link">
             Retour à l’accueil
