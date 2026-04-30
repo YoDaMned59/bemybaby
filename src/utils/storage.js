@@ -1,3 +1,5 @@
+import { isSyncedStorageKey } from "./syncedStorageKeys";
+
 export function readStorage(key, fallback) {
   try {
     const rawValue = localStorage.getItem(key);
@@ -18,9 +20,23 @@ export function readStorage(key, fallback) {
   }
 }
 
-export function writeStorage(key, value) {
+/**
+ * @param {string} key
+ * @param {unknown} value
+ * @param {{ silent?: boolean }} [opts] — `silent`: ne déclenche pas la synchro cloud (writes internes pendant la fusion Supabase).
+ */
+export function writeStorage(key, value, opts = {}) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
+    if (
+      !opts.silent &&
+      typeof window !== "undefined" &&
+      isSyncedStorageKey(key)
+    ) {
+      window.dispatchEvent(
+        new CustomEvent("bemybaby-storage-write", { detail: { key } })
+      );
+    }
     return true;
   } catch {
     return false;

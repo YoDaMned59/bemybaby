@@ -4,6 +4,8 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vite.dev/config/
 export default defineConfig({
+  /** Permet d’utiliser sur Vercel les noms NEXT_PUBLIC_* (intégration Supabase Next) en plus de VITE_*. */
+  envPrefix: ["VITE_", "NEXT_PUBLIC_"],
   plugins: [
     react(),
     VitePWA({

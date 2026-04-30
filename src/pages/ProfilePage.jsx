@@ -16,7 +16,7 @@ export default function ProfilePage() {
         onBack={() => navigate(-1)}
         brandClassName="profile-brand"
         title="Mon profil"
-        subtitle="Pour le MVP, seuls le prénom et la date prévue sont demandés : ils servent aux rappels et à l’affichage de ta grossesse. Tout reste sur cet appareil."
+        subtitle="Pour le MVP, seuls le prénom et la date prévue sont demandés : ils servent aux rappels et à l’affichage de ta grossesse. Les données sont d’abord stockées sur cet appareil ; si la synchro cloud est activée, une copie peut être sauvegardée chez l’hébergeur (voir confidentialité)."
       />
 
       <ProfileForm

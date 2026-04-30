@@ -25,8 +25,19 @@ export default function PrivacyPage() {
         <p>
           Les <strong>rendez-vous</strong> que tu notes, les <strong>idées de
           prénoms</strong> cochées et les autres <strong>listes</strong> (valise, etc.)
-          sont stockés comme le reste : <strong>localement</strong>, sans synchronisation
-          vers un compte BeMyBaby dans cette version.
+          sont d’abord enregistrés <strong>localement</strong> dans ton navigateur
+          (<strong>localStorage</strong>).
+        </p>
+        <p>
+          Si l’éditeur a activé une <strong>synchronisation Supabase</strong>, une copie de
+          ces données peut être transférée de façon chiffrée en transit vers un projet
+          hébergé chez Supabase (souvent en Europe selon les réglages du projet), liée à un{" "}
+          <strong>compte utilisateur anonyme</strong>. Objectif : retrouver ton suivi depuis
+          un autre appareil, pas du ciblage publicitaire. Voir la{" "}
+          <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">
+            politique de confidentialité de Supabase (en anglais)
+          </a>
+          .
         </p>
       </section>
 
@@ -40,14 +51,11 @@ export default function PrivacyPage() {
           de l’app.
         </p>
         <p>
-          Quelques <strong>événements techniques agrégés</strong> peuvent aussi être
-          envoyés (par exemple enregistrement du profil côté navigateur, ouverture d’une
-          liste, paliers d’avancement très grossiers), toujours{" "}
-          <strong>sans</strong> transmettre le contenu des champs ni le détail des coches.
-        </p>
-        <p>
-          Ces statistiques <strong>ne contiennent pas</strong> ton prénom, ta date prévue
-          ni le détail de tes listes, car ces éléments ne quittent pas ton appareil.
+          Les <strong>événements d’analytics</strong> envoyés sont des métriques techniques (par
+          exemple pages vues ou type d’interaction), selon réglages,{" "}
+          <strong>sans être</strong> une copie textuelle de tes champs utilisateur destinée aux
+          outils de mesure. Ne pas les confondre avec la donnée fonctionnelle (profil, listes…)
+          stockée localement puis, si configuré, sur Supabase uniquement au service du produit.
         </p>
         <p>
           <a href={VERCEL_PRIVACY} target="_blank" rel="noopener noreferrer">
@@ -59,10 +67,12 @@ export default function PrivacyPage() {
       <section className="privacy-block" aria-labelledby="privacy-rights-title">
         <h2 id="privacy-rights-title">Tes droits (rappel)</h2>
         <p>
-          Pour toute question sur les données traitées par l’hébergeur ou l’outil
-          d’analyse, tu peux t’adresser à l’éditeur du site ou consulter la documentation
-          de Vercel. Pour les données locales de l’app, tu restes maître du stockage sur
-          ton téléphone ou ton ordinateur.
+          Pour toute question sur les données traitées par les hébergeurs (
+          <strong>Vercel</strong>, <strong>Supabase</strong> si synchro cloud) ou l’outil
+          d’analyse (<strong>GA4</strong> si activé), contacte l’éditeur ou consulte les
+          documents légaux correspondants. Pour les données encore uniquement sur ton
+          appareil dans le navigateur, tu restes maître du stockage sur ton téléphone ou ton
+          ordinateur.
         </p>
       </section>
     </AppPage>
