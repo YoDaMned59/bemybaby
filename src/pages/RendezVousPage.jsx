@@ -73,7 +73,7 @@ export default function RendezVousPage() {
         sectionClassName="rdv-header"
         onBack={() => navigate(-1)}
         title="Rendez-vous"
-        subtitle="Rappels par date (local). Repères d’après le calendrier vaccinal, ameli (suivi) et le ministère (certificats) — vérifier toujours avec un professionnel de santé."
+        subtitle="Rappels par date (stockés sur ton appareil). En cas de doute, vérifie toujours avec un professionnel de santé. Sources officielles en bas de page."
       />
 
       <form className="rdv-form" onSubmit={onAddCustom}>
@@ -102,57 +102,6 @@ export default function RendezVousPage() {
           Ajouter
         </button>
       </form>
-
-      <section className="rdv-section" aria-labelledby="rdv-tpl-title">
-        <h2 className="rdv-h2" id="rdv-tpl-title">
-          Suggestions (repères)
-        </h2>
-        <ul className="rdv-template-list">
-          {APPOINTMENT_TEMPLATES.map((tmpl) => (
-            <li key={tmpl.id} className="rdv-template-card">
-              <div>
-                <span className="rdv-tpl-cat">{tmpl.category}</span>
-                <h3 className="rdv-tpl-title">{tmpl.title}</h3>
-                {tmpl.hint ? <p className="rdv-tpl-hint">{tmpl.hint}</p> : null}
-              </div>
-              {planningId === tmpl.id ? (
-                <div className="rdv-tpl-confirm">
-                  <input
-                    type="date"
-                    className="rdv-input"
-                    value={templateDate}
-                    onChange={(e) => setTemplateDate(e.target.value)}
-                  />
-                  <div className="rdv-tpl-btns">
-                    <button
-                      type="button"
-                      className="rdv-btn"
-                      onClick={() => onConfirmTemplate(tmpl)}
-                    >
-                      Valider
-                    </button>
-                    <button
-                      type="button"
-                      className="rdv-btn rdv-btn--ghost"
-                      onClick={() => setPlanningId(null)}
-                    >
-                      Annuler
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  className="rdv-btn rdv-btn--sm"
-                  onClick={() => onPlanTemplate(tmpl)}
-                >
-                  Choisir la date
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
-      </section>
 
       <section className="rdv-section" aria-labelledby="rdv-list-title">
         <h2 className="rdv-h2" id="rdv-list-title">
@@ -205,7 +154,63 @@ export default function RendezVousPage() {
         )}
       </section>
 
-      <footer className="rdv-sources" aria-label="Sources officielles">
+      <details className="rdv-suggestions-details">
+        <summary className="rdv-suggestions-summary">
+          Suggestions (repères calendrier vaccinal, suivi…)
+        </summary>
+        <section className="rdv-section rdv-section--nested" aria-labelledby="rdv-tpl-title">
+          <h2 className="rdv-h2 rdv-visually-hidden" id="rdv-tpl-title">
+            Suggestions
+          </h2>
+          <ul className="rdv-template-list">
+            {APPOINTMENT_TEMPLATES.map((tmpl) => (
+              <li key={tmpl.id} className="rdv-template-card">
+                <div>
+                  <span className="rdv-tpl-cat">{tmpl.category}</span>
+                  <h3 className="rdv-tpl-title">{tmpl.title}</h3>
+                  {tmpl.hint ? <p className="rdv-tpl-hint">{tmpl.hint}</p> : null}
+                </div>
+                {planningId === tmpl.id ? (
+                  <div className="rdv-tpl-confirm">
+                    <input
+                      type="date"
+                      className="rdv-input"
+                      value={templateDate}
+                      onChange={(e) => setTemplateDate(e.target.value)}
+                    />
+                    <div className="rdv-tpl-btns">
+                      <button
+                        type="button"
+                        className="rdv-btn"
+                        onClick={() => onConfirmTemplate(tmpl)}
+                      >
+                        Valider
+                      </button>
+                      <button
+                        type="button"
+                        className="rdv-btn rdv-btn--ghost"
+                        onClick={() => setPlanningId(null)}
+                      >
+                        Annuler
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    className="rdv-btn rdv-btn--sm"
+                    onClick={() => onPlanTemplate(tmpl)}
+                  >
+                    Choisir la date
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      </details>
+
+      <footer id="rdv-sources" className="rdv-sources" aria-label="Sources officielles">
         <h2 className="rdv-h2">Sources (France)</h2>
         <ul className="rdv-sources-list">
           {RDV_OFFICIAL_SOURCES.map((s) => (
