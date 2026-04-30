@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+
 import Ga4Pageview from "./components/Ga4Pageview";
 import DashboardPage from "./pages/DashboardPage";
 import ListsPage from "./pages/ListsPage";
@@ -15,7 +16,7 @@ export default function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <>
       <Ga4Pageview />
       <Routes>
         <Route path="/" element={<DashboardPage />} />
@@ -26,6 +27,6 @@ export default function App() {
         <Route path="/confidentialite" element={<PrivacyPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }

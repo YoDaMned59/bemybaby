@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "icons:pwa": "node scripts/generate-pwa-icons.mjs"
+    "icons:pwa": "node scripts/generate-pwa-icons.mjs",
+    "check:supabase": "node scripts/check-supabase-host.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.105.1",
@@ -31,5 +32,8 @@
     "sharp": "^0.34.5",
     "vite": "^8.0.4",
     "vite-plugin-pwa": "^1.2.0"
+  },
+  "overrides": {
+    "serialize-javascript": "^7.0.5"
   }
 }

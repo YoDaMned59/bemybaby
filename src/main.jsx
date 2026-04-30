@@ -1,38 +1,24 @@
 import "./utils/ga4Bootstrap";
-import "./utils/installPromptCapture";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Analytics } from "@vercel/analytics/react";
+import { BrowserRouter } from "react-router-dom";
 import { registerSW } from "virtual:pwa-register";
-import App from "./App";
-import SupabaseStorageSyncListen from "./components/SupabaseStorageSyncListen";
+import AppRoot from "./AppRoot";
 import { isSupabaseConfigured } from "./lib/supabase";
-import { bootstrapSupabase } from "./services/supabasePersist";
 import "./styles/index.scss";
 
-registerSW({ immediate: true });
-
-const analyticsOn =
-  import.meta.env.PROD && import.meta.env.VITE_DISABLE_ANALYTICS !== "true";
-
-async function start() {
-  try {
-    if (isSupabaseConfigured()) {
-      await bootstrapSupabase();
-    }
-  } catch (e) {
-    console.warn("[BeMyBaby] Supabase désactivée ou inaccessible :", e);
-  }
-
-  ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-      <>
-        <SupabaseStorageSyncListen />
-        <App />
-        {analyticsOn ? <Analytics /> : null}
-      </>
-    </React.StrictMode>
+if (import.meta.env.DEV && !isSupabaseConfigured()) {
+  console.info(
+    "[BeMyBaby] Dév : créer .env avec VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY (voir .env.example) pour tester l’auth et la synchro comme en prod."
   );
 }
 
-start();
+registerSW({ immediate: true });
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <AppRoot />
+    </BrowserRouter>
+  </React.StrictMode>
+);

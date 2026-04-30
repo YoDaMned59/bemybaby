@@ -1,4 +1,6 @@
 import { getSupabase } from "../lib/supabase";
+import { userHasRegisteredEmail } from "../utils/authIdentity";
+import { allowsAnonymousBrowsing } from "../utils/supabaseEnv";
 import { readStorage, writeStorage } from "../utils/storage";
 import { SYNCED_STORAGE_KEYS } from "../utils/syncedStorageKeys";
 
@@ -45,26 +47,57 @@ async function upsertPayload(supabase, userId, payload) {
   }
 }
 
-/** Au démarrage : session anonyme si besoin, fusion cloud / local puis sauvegarde. */
+/** Anonymous désactivé côté Supabase → pas d’erreur envoyée à AppRoot. */
+function isAnonymousSignInDisabledError(error) {
+  const msg = String(error?.message ?? "").toLowerCase();
+  return (
+    msg.includes("anonymous sign-ins are disabled") ||
+    msg.includes("anonymous sign-in disabled") ||
+    (msg.includes("anonymous") && msg.includes("disabled"))
+  );
+}
+
+/**
+ * Au démarrage : fusion cloud / local puis sauvegarde.
+ * Session anonyme seulement si `VITE_ALLOW_ANONYMOUS_BROWSING=true`.
+ */
 export async function bootstrapSupabase() {
   const supabase = getSupabase();
   if (!supabase) {
     return;
   }
 
+  const allowAnon = allowsAnonymousBrowsing();
+
   const { data: sessionData } = await supabase.auth.getSession();
   let user = sessionData?.session?.user ?? null;
 
   if (!user) {
+    if (!allowAnon) {
+      return;
+    }
     const { data: anonData, error: anonErr } =
       await supabase.auth.signInAnonymously();
     if (anonErr) {
+      if (isAnonymousSignInDisabledError(anonErr)) {
+        if (import.meta.env.DEV) {
+          console.info(
+            "[BeMyBaby] Provider Anonymous désactivé dans Supabase. Retire VITE_ALLOW_ANONYMOUS_BROWSING en prod ou active Authentication → Anonymous."
+          );
+        }
+        return;
+      }
       throw anonErr;
     }
-    user = anonData.user;
+    user = anonData?.user ?? null;
   }
 
   if (!user) {
+    return;
+  }
+
+  if (!allowAnon && !userHasRegisteredEmail(user)) {
+    await supabase.auth.signOut();
     return;
   }
 
@@ -111,7 +144,11 @@ export function scheduleSupabasePushAfterLocalWrite() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      const userId = session?.user?.id;
+      const user = session?.user ?? null;
+      if (!allowsAnonymousBrowsing() && !userHasRegisteredEmail(user)) {
+        return;
+      }
+      const userId = user?.id;
       if (!userId) {
         return;
       }

@@ -57,6 +57,7 @@ function sendGa4Event(name, properties) {
  *
  * **Événements d’activation / qualité**
  * — `profile_saved` (`complete` : prénom + date prévue).
+ * — `account_email_linked` — compte anonyme relié à un e-mail (`updateUser`).
  * — `checklist_opened` : ouverture d’une liste ; remplace historiquement `list_checklist_open`.
  * — `checklist_milestone` : palier 25 / 50 / 75 / 100 % (`list_id`, `milestone`).
  * — `checklist_custom_item_added` — `rdv_created` (`from_template`) — `rdv_removed`.

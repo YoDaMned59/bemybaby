@@ -39,6 +39,13 @@ export default function PrivacyPage() {
           </a>
           .
         </p>
+        <p>
+          Tu peux te <strong>créer un compte ou te connecter</strong> depuis l’entrée de
+          l’application ou depuis la page <strong>Profil</strong>. Quand une authentification
+          obligatoire par e-mail est activée avec la synchro Supabase, l’accès au suivi peut
+          exiger cette étape avant d’accéder à l’app ; sinon tu peux relier une adresse plus
+          tard depuis le profil (réglages Supabase&nbsp;/&nbsp;Auth et variables frontend).
+        </p>
       </section>
 
       <section className="privacy-block" aria-labelledby="privacy-analytics-title">

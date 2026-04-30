@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import AppPage from "../components/page/AppPage";
 import DashboardHero from "../components/dashboard/DashboardHero";
 import DashboardListQuickAccess from "../components/dashboard/DashboardListQuickAccess";
+import DashboardAuthTeaser from "../components/dashboard/DashboardAuthTeaser";
 import DashboardProfileTeaser from "../components/dashboard/DashboardProfileTeaser";
 import DashboardInfoCards from "../components/dashboard/DashboardInfoCards";
 import DashboardBabySection from "../components/dashboard/DashboardBabySection";
 import DashboardProgressSection from "../components/dashboard/DashboardProgressSection";
 import DashboardTasksSection from "../components/dashboard/DashboardTasksSection";
 import DashboardDailyTip from "../components/dashboard/DashboardDailyTip";
-import DashboardPwaInstall from "../components/dashboard/DashboardPwaInstall";
 import DashboardRdvTeaser from "../components/dashboard/DashboardRdvTeaser";
 import { trackLandingViewIfFirstThisSession } from "../utils/funnelAnalytics";
 import { getTodayTasks } from "../utils/todayTasks";
@@ -50,9 +50,9 @@ export default function DashboardPage() {
 
       <DashboardListQuickAccess />
 
-      {!isProfileComplete ? <DashboardProfileTeaser /> : null}
+      <DashboardAuthTeaser />
 
-      <DashboardPwaInstall />
+      {!isProfileComplete ? <DashboardProfileTeaser /> : null}
 
       <DashboardInfoCards
         hasDueDate={hasDueDate}
