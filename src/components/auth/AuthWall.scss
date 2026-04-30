@@ -36,18 +36,44 @@
   line-height: 1.2;
 }
 
-.auth-wall-lead {
-  margin: 0 0 18px;
-  font-size: 14px;
-  line-height: 1.55;
+.auth-wall-hook {
+  margin: 0 0 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 600;
   color: var(--text-soft);
+}
+
+.auth-wall-desc {
+  margin: 0 0 10px;
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.auth-wall-desc + .auth-wall-desc {
+  font-weight: 600;
+  color: var(--text-soft);
+  margin-bottom: 18px;
 }
 
 .auth-wall-tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+}
+
+.auth-wall-reassurance {
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text-soft);
+  letter-spacing: 0.02em;
+  text-align: center;
+  opacity: 0.88;
 }
 
 .auth-wall-tab {

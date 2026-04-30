@@ -108,9 +108,14 @@ export default function AuthWall({ onAuthenticated }) {
       <div className="auth-wall-card">
         <span className="auth-wall-brand">BeMyBaby</span>
         <h1 className="auth-wall-title">Bienvenue</h1>
-        <p className="auth-wall-lead">
-          Connecte-toi ou crée un compte pour accéder à ton suivi (listes,
-          profil, rendez-vous).
+        <p className="auth-wall-hook">
+          Déjà utilisé pour organiser les premières listes et rendez-vous bébé.
+        </p>
+        <p className="auth-wall-desc">
+          Organise ta grossesse et prépare l’arrivée de bébé.
+        </p>
+        <p className="auth-wall-desc">
+          Retrouve tes listes, ton profil et tes rendez-vous partout.
         </p>
 
         <div className="auth-wall-tabs" role="tablist">
@@ -149,6 +154,10 @@ export default function AuthWall({ onAuthenticated }) {
             Connexion
           </button>
         </div>
+
+        <p className="auth-wall-reassurance">
+          Gratuit • Sans engagement • Données sécurisées
+        </p>
 
         {error ? (
           <p className="auth-wall-alert auth-wall-alert--error" role="alert">
@@ -189,7 +198,7 @@ export default function AuthWall({ onAuthenticated }) {
               minLength={AUTH_MIN_PASSWORD}
             />
             <label className="auth-wall-label" htmlFor="authwall-pass-up2">
-              Confirmer
+              Confirmer le mot de passe
             </label>
             <input
               id="authwall-pass-up2"
@@ -206,7 +215,7 @@ export default function AuthWall({ onAuthenticated }) {
               className="auth-wall-submit auth-wall-submit--primary"
               disabled={busy}
             >
-              {busy ? "Patience…" : "Créer mon compte"}
+              {busy ? "Patience…" : "Commencer gratuitement"}
             </button>
           </form>
         ) : (

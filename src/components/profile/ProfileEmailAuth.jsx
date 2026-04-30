@@ -183,7 +183,7 @@ export default function ProfileEmailAuth() {
       {isAnon ? (
         <>
           <form className="profile-email-auth-form" onSubmit={handleAttachAccount}>
-            <p className="profile-email-auth-form-title">Créer mon compte</p>
+            <p className="profile-email-auth-form-title">Créer mon espace</p>
             <div className="profile-email-auth-field">
               <label htmlFor="auth-email-up">E-mail</label>
               <input
@@ -224,7 +224,7 @@ export default function ProfileEmailAuth() {
               className="profile-email-auth-button profile-email-auth-button--primary"
               disabled={busy}
             >
-              {busy ? "Patience…" : "Créer mon compte avec cet e-mail"}
+              {busy ? "Patience…" : "Créer mon espace avec cet e-mail"}
             </button>
           </form>
 
