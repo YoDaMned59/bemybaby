@@ -8,6 +8,9 @@ export const PROFILE_STORAGE_KEY = "profile";
 /** Aligné avec `useCompletedTasks` */
 export const COMPLETED_PREGNANCY_TASKS_KEY = "completedPregnancyTasks";
 
+/** Identifiant du dernier compte dont l’état cloud a été fusionné avec le local (évite de mélanger deux comptes sur le même navigateur). */
+export const BEMYBABY_LAST_CLOUD_USER_ID_KEY = "bemybabyLastCloudUserId";
+
 /** Toutes les clés métier envoyées dans Supabase (le reste reste uniquement locale). */
 export const SYNCED_STORAGE_KEYS = Object.freeze([
   PROFILE_STORAGE_KEY,

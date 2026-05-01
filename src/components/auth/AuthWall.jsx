@@ -4,6 +4,7 @@ import {
   AUTH_MIN_PASSWORD,
   mapAuthErrorMessage,
 } from "../../utils/authUiMessages";
+import { clearLocalSyncedAppState } from "../../services/supabasePersist";
 import { trackAppEvent } from "../../utils/appAnalytics";
 import "./AuthWall.scss";
 
@@ -71,6 +72,7 @@ export default function AuthWall({ onAuthenticated }) {
       }
       trackAppEvent("auth_signup_submitted", {});
       if (data.session) {
+        clearLocalSyncedAppState();
         onAuthenticated();
       } else {
         setInfo(

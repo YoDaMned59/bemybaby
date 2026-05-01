@@ -10,6 +10,7 @@ import {
   AUTH_MIN_PASSWORD,
   mapAuthErrorMessage,
 } from "../../utils/authUiMessages";
+import { signOutBeMyBaby } from "../../services/supabasePersist";
 import { trackAppEvent } from "../../utils/appAnalytics";
 import "./ProfileEmailAuth.scss";
 
@@ -123,7 +124,7 @@ export default function ProfileEmailAuth() {
     resetMessages();
     setBusy(true);
     try {
-      await supabase.auth.signOut();
+      await signOutBeMyBaby();
       window.location.reload();
     } finally {
       setBusy(false);

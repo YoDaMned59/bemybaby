@@ -1,8 +1,14 @@
 import { getSupabase } from "../lib/supabase";
 import { userHasRegisteredEmail } from "../utils/authIdentity";
-import { allowsAnonymousBrowsing } from "../utils/supabaseEnv";
-import { readStorage, writeStorage } from "../utils/storage";
-import { SYNCED_STORAGE_KEYS } from "../utils/syncedStorageKeys";
+import {
+  allowsAnonymousBrowsing,
+  requiresEmailAuthGate,
+} from "../utils/supabaseEnv";
+import { readStorage, writeStorage, removeStorage } from "../utils/storage";
+import {
+  BEMYBABY_LAST_CLOUD_USER_ID_KEY,
+  SYNCED_STORAGE_KEYS,
+} from "../utils/syncedStorageKeys";
 
 /** @returns {Record<string, unknown>} */
 function collectPayload() {
@@ -27,6 +33,51 @@ function mergeRemoteThenLocal(remotePayload, localPayload) {
   const remote =
     remotePayload && typeof remotePayload === "object" ? remotePayload : {};
   return { ...remote, ...localPayload };
+}
+
+/** Efface l’état app synchronisé (local + marqueur de compte) avant déconnexion ou après inscription. */
+export function clearLocalSyncedAppState() {
+  for (const k of SYNCED_STORAGE_KEYS) {
+    removeStorage(k);
+  }
+  try {
+    localStorage.removeItem(BEMYBABY_LAST_CLOUD_USER_ID_KEY);
+  } catch {
+    //
+  }
+}
+
+function readLastCloudUserId() {
+  try {
+    return localStorage.getItem(BEMYBABY_LAST_CLOUD_USER_ID_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function writeLastCloudUserId(userId) {
+  try {
+    localStorage.setItem(BEMYBABY_LAST_CLOUD_USER_ID_KEY, userId);
+  } catch {
+    //
+  }
+}
+
+/**
+ * Déconnexion : purge des données « par compte » en local puis signOut Supabase.
+ */
+export async function signOutBeMyBaby() {
+  clearLocalSyncedAppState();
+  const supabase = getSupabase();
+  if (supabase) {
+    await supabase.auth.signOut();
+  }
+}
+
+function wipeSyncedKeysLocalOnly() {
+  for (const k of SYNCED_STORAGE_KEYS) {
+    removeStorage(k);
+  }
 }
 
 /**
@@ -97,6 +148,7 @@ export async function bootstrapSupabase() {
   }
 
   if (!allowAnon && !userHasRegisteredEmail(user)) {
+    clearLocalSyncedAppState();
     await supabase.auth.signOut();
     return;
   }
@@ -118,8 +170,24 @@ export async function bootstrapSupabase() {
       ? row.payload
       : {};
 
+  const prevCloudUserId = readLastCloudUserId();
   const local = collectPayload();
-  const merged = mergeRemoteThenLocal(remote, local);
+  const userSwitched =
+    Boolean(prevCloudUserId) && prevCloudUserId !== user.id;
+  const noCloudRowYet = row == null && !fetchErr;
+  const localSyncedNonempty = Object.keys(local).length > 0;
+  const orphanLocalOnNewAccount =
+    requiresEmailAuthGate() &&
+    noCloudRowYet &&
+    localSyncedNonempty;
+
+  let merged;
+  if (userSwitched || orphanLocalOnNewAccount) {
+    wipeSyncedKeysLocalOnly();
+    merged = { ...remote };
+  } else {
+    merged = mergeRemoteThenLocal(remote, local);
+  }
 
   for (const key of SYNCED_STORAGE_KEYS) {
     if (!(key in merged)) {
@@ -129,6 +197,7 @@ export async function bootstrapSupabase() {
   }
 
   await upsertPayload(supabase, user.id, merged);
+  writeLastCloudUserId(user.id);
 }
 
 let flushTimer;

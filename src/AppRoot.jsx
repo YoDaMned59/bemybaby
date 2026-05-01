@@ -4,7 +4,7 @@ import App from "./App";
 import SupabaseStorageSyncListen from "./components/SupabaseStorageSyncListen";
 import AuthWall from "./components/auth/AuthWall";
 import PrivacyPage from "./pages/PrivacyPage";
-import { bootstrapSupabase } from "./services/supabasePersist";
+import { bootstrapSupabase, signOutBeMyBaby } from "./services/supabasePersist";
 import { getSupabase, isSupabaseConfigured } from "./lib/supabase";
 import { userHasRegisteredEmail } from "./utils/authIdentity";
 import { requiresEmailAuthGate } from "./utils/supabaseEnv";
@@ -56,7 +56,7 @@ export default function AppRoot() {
       if (gated) {
         const u = session?.user;
         if (u && !userHasRegisteredEmail(u)) {
-          await supabase.auth.signOut();
+          await signOutBeMyBaby();
           session = null;
         }
         const lacksEmail =
