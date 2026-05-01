@@ -4,6 +4,7 @@ import {
   Eye,
   EyeOff,
   Heart,
+  ListChecks,
   Lock,
   LogIn,
   Mail,
@@ -130,44 +131,58 @@ export default function AuthWall({ onAuthenticated }) {
   return (
     <div className="auth-wall">
       <div className="auth-wall-card">
-        <header className="auth-wall-header">
-          <span className="auth-wall-brand">BEMYBABY</span>
-          <div className="auth-wall-logo-mark" aria-hidden>
-            <Heart className="auth-wall-logo-heart" strokeWidth={2} />
+        <header className="auth-wall-top">
+          <div className="auth-wall-brand-row">
+            <span className="auth-wall-brand">BEMYBABY</span>
+            <div className="auth-wall-logo-mark" aria-hidden>
+              <Heart className="auth-wall-logo-heart" strokeWidth={2} />
+            </div>
           </div>
-          <h1 className="auth-wall-title">
-            {mode === "signup"
-              ? "Sauvegarde ton suivi bébé 👶"
-              : "Reprends ton suivi bébé 👶"}
-          </h1>
-          <p className="auth-wall-lead">
-            {mode === "signup"
-              ? "Tu as commencé à préparer ton suivi."
-              : "Entre tes identifiants pour continuer."}
-          </p>
-          <p className="auth-wall-lead auth-wall-lead--accent">
-            {mode === "signup"
-              ? "Crée ton compte pour ne rien perdre."
-              : "Retrouve tes listes et rendez-vous partout."}
-          </p>
-        </header>
 
-        <div className="auth-wall-benefits" aria-label="Avantages du compte">
-          <div className="auth-wall-benefit">
-            <Cloud className="auth-wall-benefit-icon" strokeWidth={2} aria-hidden />
-            <span>
-              Tes listes et rendez-vous seront sauvegardés automatiquement
-            </span>
-          </div>
-          <div className="auth-wall-benefit">
-            <Smartphone className="auth-wall-benefit-icon" strokeWidth={2} aria-hidden />
-            <span>Accède à ton suivi partout sur tous tes appareils</span>
-          </div>
-          <div className="auth-wall-benefit">
-            <Lock className="auth-wall-benefit-icon" strokeWidth={2} aria-hidden />
-            <span>Données sécurisées et 100% privées</span>
-          </div>
-        </div>
+          {mode === "signup" ? (
+            <div className="auth-wall-hero">
+              <h1 className="auth-wall-hero-title">
+                Tu attends un bébé ? Prépare tout sans rien oublier 👶
+              </h1>
+              <p className="auth-wall-hero-sub">
+                Listes bébé, valise maternité, rendez-vous et suivi grossesse au
+                même endroit.
+              </p>
+            </div>
+          ) : (
+            <div className="auth-wall-hero auth-wall-hero--compact">
+              <h1 className="auth-wall-hero-title">Bon retour 👶</h1>
+              <p className="auth-wall-hero-sub">
+                Connecte-toi pour retrouver ton suivi.
+              </p>
+            </div>
+          )}
+
+          {mode === "signup" ? (
+            <div
+              className="auth-wall-why"
+              aria-labelledby="auth-wall-why-heading"
+            >
+              <h2 id="auth-wall-why-heading" className="auth-wall-why-title">
+                Pourquoi créer un compte ?
+              </h2>
+              <ul className="auth-wall-why-list">
+                <li className="auth-wall-why-item">
+                  <Cloud className="auth-wall-why-icon" strokeWidth={2} aria-hidden />
+                  <span>Sauvegarder ton suivi</span>
+                </li>
+                <li className="auth-wall-why-item">
+                  <ListChecks className="auth-wall-why-icon" strokeWidth={2} aria-hidden />
+                  <span>Retrouver tes listes et rendez-vous</span>
+                </li>
+                <li className="auth-wall-why-item">
+                  <Smartphone className="auth-wall-why-icon" strokeWidth={2} aria-hidden />
+                  <span>Accéder à ton espace depuis tes appareils</span>
+                </li>
+              </ul>
+            </div>
+          ) : null}
+        </header>
 
         <div className="auth-wall-tabs" role="tablist">
           <button
@@ -176,8 +191,8 @@ export default function AuthWall({ onAuthenticated }) {
             aria-selected={mode === "signup"}
             className={
               mode === "signup"
-                ? "auth-wall-tab auth-wall-tab--active"
-                : "auth-wall-tab"
+                ? "auth-wall-tab auth-wall-tab--primary auth-wall-tab--active"
+                : "auth-wall-tab auth-wall-tab--primary"
             }
             onClick={() => {
               setMode("signup");
@@ -196,8 +211,8 @@ export default function AuthWall({ onAuthenticated }) {
             aria-selected={mode === "signin"}
             className={
               mode === "signin"
-                ? "auth-wall-tab auth-wall-tab--active"
-                : "auth-wall-tab"
+                ? "auth-wall-tab auth-wall-tab--secondary auth-wall-tab--active"
+                : "auth-wall-tab auth-wall-tab--secondary"
             }
             onClick={() => {
               setMode("signin");
@@ -209,16 +224,8 @@ export default function AuthWall({ onAuthenticated }) {
           </button>
         </div>
 
-        <p className="auth-wall-badges">
-          <span className="auth-wall-badge">✓ Gratuit</span>
-          <span className="auth-wall-badge-sep" aria-hidden>
-            ·
-          </span>
-          <span className="auth-wall-badge">✨ Sans engagement</span>
-          <span className="auth-wall-badge-sep" aria-hidden>
-            ·
-          </span>
-          <span className="auth-wall-badge">🛡️ Données sécurisées</span>
+        <p className="auth-wall-reassurance">
+          Gratuit • Sans engagement • Données sécurisées
         </p>
 
         {error ? (
@@ -342,8 +349,11 @@ export default function AuthWall({ onAuthenticated }) {
               disabled={busy}
             >
               <UserPlus className="auth-wall-submit-icon" size={20} strokeWidth={2} aria-hidden />
-              {busy ? "Patience…" : "Créer mon compte et sauvegarder"}
+              {busy ? "Patience…" : "Créer mon compte gratuitement"}
             </button>
+            <p className="auth-wall-form-hint">
+              Inscription en moins de 30 secondes
+            </p>
           </form>
         ) : (
           <form
