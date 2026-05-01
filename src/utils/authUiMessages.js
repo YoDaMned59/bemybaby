@@ -46,6 +46,38 @@ export function mapAuthErrorMessage(message) {
   if (m.includes("password")) {
     return "Mot de passe refusé par le serveur (longueur ou règles).";
   }
+  if (
+    m.includes("cache de schéma") ||
+    m.includes("schema cache") ||
+    m.includes("could not find the function")
+  ) {
+    return (
+      "L’API Supabase ne voit pas encore la fonction de suppression. " +
+      "Dans Supabase → SQL Editor, exécute : notify pgrst, 'reload schema'; puis réessaie. " +
+      "Si l’erreur continue, exécute tout le fichier de migration delete_own_account.sql puis refais le NOTIFY."
+    );
+  }
+  if (
+    m.includes("delete_own_account") &&
+    (m.includes("does not exist") ||
+      m.includes("n'existe pas") ||
+      m.includes("introuvable"))
+  ) {
+    return (
+      "Suppression du compte indisponible : la base de données n’a pas encore la fonction nécessaire. " +
+      "Exécute la migration SQL du dossier supabase/migrations sur ton projet Supabase (SQL Editor), puis réessaie."
+    );
+  }
+  if (
+    m.includes("permission denied") ||
+    m.includes("insufficient privilege") ||
+    m.includes("42501")
+  ) {
+    return (
+      "Suppression impossible : le serveur refuse l’opération. " +
+      "Vérifie que la fonction SQL « delete_own_account » a bien été appliquée (voir migrations du projet)."
+    );
+  }
   return typeof message === "string" && message.trim()
     ? message
     : "Une erreur est survenue. Réessaie dans un instant.";

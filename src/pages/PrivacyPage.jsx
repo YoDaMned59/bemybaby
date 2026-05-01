@@ -142,11 +142,14 @@ export default function PrivacyPage() {
 
       <PrivacySection id="privacy-rights" icon={Shield} title="Tes droits">
         <p className="privacy-lead">
-          Tu peux demander la <strong>suppression</strong> de tes données à tout moment.
+          Tu peux <strong>supprimer ton compte et tes données</strong> à tout moment depuis{" "}
+          <strong>Profil</strong>, via « Désinscription et suppression des données » (confirmation requise). Ton
+          fichier cloud et ton compte sont alors effacés côté serveur ; les données synchronisées sur
+          l’appareil sont aussi retirées localement.
         </p>
         <p className="privacy-lead privacy-lead--tight">
           Tu peux aussi <strong>effacer les données locales</strong> depuis les paramètres de ton navigateur
-          (données du site).
+          (données du site), sans supprimer le compte.
         </p>
         <p className="privacy-footer-links">
           <Link to="/" className="privacy-footer-link">

@@ -74,6 +74,27 @@ export async function signOutBeMyBaby() {
   }
 }
 
+/**
+ * Supprime le compte Supabase courant (ligne `user_app_state` en cascade) puis efface l’état local.
+ * Requiert la fonction SQL `public.delete_own_account` (voir migrations Supabase).
+ */
+export async function deleteOwnAccount() {
+  const supabase = getSupabase();
+  if (!supabase) {
+    throw new Error("Supabase non configuré.");
+  }
+  const { error } = await supabase.rpc("delete_own_account", {});
+  if (error) {
+    throw error;
+  }
+  clearLocalSyncedAppState();
+  try {
+    await supabase.auth.signOut();
+  } catch {
+    // La session peut déjà être invalide après suppression auth.
+  }
+}
+
 function wipeSyncedKeysLocalOnly() {
   for (const k of SYNCED_STORAGE_KEYS) {
     removeStorage(k);

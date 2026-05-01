@@ -25,6 +25,12 @@
   border-top: 1px solid var(--border);
 }
 
+.profile-email-auth-session-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .profile-email-auth-signout {
   display: inline-flex;
   align-items: center;
@@ -71,6 +77,38 @@
 
 .profile-email-auth-signout:hover:not(:disabled) .profile-email-auth-signout-icon {
   color: var(--primary-strong);
+}
+
+.profile-email-auth-unsubscribe {
+  align-self: center;
+  margin-top: 2px;
+  padding: 4px 6px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: var(--text-muted);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  appearance: none;
+
+  &:hover:not(:disabled) {
+    color: var(--text-soft);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-strong);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
 }
 
 .profile-email-auth-title {

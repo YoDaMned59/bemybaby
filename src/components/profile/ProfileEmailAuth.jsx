@@ -10,7 +10,7 @@ import {
   AUTH_MIN_PASSWORD,
   mapAuthErrorMessage,
 } from "../../utils/authUiMessages";
-import { signOutBeMyBaby } from "../../services/supabasePersist";
+import { deleteOwnAccount, signOutBeMyBaby } from "../../services/supabasePersist";
 import { trackAppEvent } from "../../utils/appAnalytics";
 import "./ProfileEmailAuth.scss";
 
@@ -25,6 +25,7 @@ export default function ProfileEmailAuth() {
   const [passIn, setPassIn] = useState("");
   const [signInOpen, setSignInOpen] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [deleteBusy, setDeleteBusy] = useState(false);
   const [error, setError] = useState("");
   const [successUp, setSuccessUp] = useState("");
 
@@ -131,6 +132,34 @@ export default function ProfileEmailAuth() {
     }
   }, [supabase, resetMessages]);
 
+  const handleDeleteAccount = useCallback(async () => {
+    if (!supabase) {
+      return;
+    }
+    const confirmed = window.confirm(
+      "Supprimer définitivement ton compte et toutes tes données sauvegardées sur nos serveurs ? " +
+        "Les données liées au suivi sur cet appareil seront aussi effacées ici. Cette action est irréversible."
+    );
+    if (!confirmed) {
+      return;
+    }
+    resetMessages();
+    setDeleteBusy(true);
+    try {
+      await deleteOwnAccount();
+      trackAppEvent("account_deleted", {});
+      window.location.reload();
+    } catch (e) {
+      const msg =
+        e && typeof e === "object" && "message" in e
+          ? String(e.message)
+          : String(e);
+      setError(mapAuthErrorMessage(msg));
+    } finally {
+      setDeleteBusy(false);
+    }
+  }, [supabase, resetMessages]);
+
   if (!configured || !supabase) {
     return null;
   }
@@ -152,15 +181,35 @@ export default function ProfileEmailAuth() {
         className="profile-email-auth profile-email-auth--signout-only"
         aria-label="Fin de session"
       >
-        <button
-          type="button"
-          className="profile-email-auth-signout"
-          onClick={handleSignOut}
-          disabled={busy}
-        >
-          <LogOut className="profile-email-auth-signout-icon" aria-hidden />
-          <span>{busy ? "Déconnexion…" : "Se déconnecter"}</span>
-        </button>
+        {error ? (
+          <p
+            className="profile-email-auth-message profile-email-auth-message--error"
+            role="alert"
+          >
+            {error}
+          </p>
+        ) : null}
+        <div className="profile-email-auth-session-actions">
+          <button
+            type="button"
+            className="profile-email-auth-signout"
+            onClick={handleSignOut}
+            disabled={busy || deleteBusy}
+          >
+            <LogOut className="profile-email-auth-signout-icon" aria-hidden />
+            <span>{busy ? "Déconnexion…" : "Se déconnecter"}</span>
+          </button>
+          <button
+            type="button"
+            className="profile-email-auth-unsubscribe"
+            onClick={handleDeleteAccount}
+            disabled={busy || deleteBusy}
+          >
+            {deleteBusy
+              ? "Suppression…"
+              : "Désinscription et suppression des données"}
+          </button>
+        </div>
       </section>
     );
   }
