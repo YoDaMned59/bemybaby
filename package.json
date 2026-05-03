@@ -6,12 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:android": "cross-env VITE_CAPACITOR=1 vite build && cap sync android",
     "lint": "eslint .",
     "preview": "vite preview",
+    "android:open": "cap open android",
     "icons:pwa": "node scripts/generate-pwa-icons.mjs",
     "check:supabase": "node scripts/check-supabase-host.mjs"
   },
   "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
     "@supabase/supabase-js": "^2.105.1",
     "@vercel/analytics": "^2.0.1",
     "lucide-react": "^1.8.0",
@@ -20,6 +24,7 @@
     "react-router-dom": "^7.14.1"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.0.0",
     "@eslint/js": "^9.39.4",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -29,6 +34,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
     "sass-embedded": "^1.99.0",
+    "cross-env": "^10.1.0",
     "sharp": "^0.34.5",
     "vite": "^8.0.4",
     "vite-plugin-pwa": "^1.2.0"
