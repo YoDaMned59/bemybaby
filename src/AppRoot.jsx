@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import App from "./App";
 import SupabaseStorageSyncListen from "./components/SupabaseStorageSyncListen";
@@ -13,6 +14,14 @@ import "./components/auth/AuthWall.scss";
 
 const analyticsOn =
   import.meta.env.PROD && import.meta.env.VITE_DISABLE_ANALYTICS !== "true";
+
+const AUTH_ENTRY_PATH = "/compte";
+const AUTH_REDIRECT_KEY = "bemybabyAuthRedirect";
+
+function normalizePathname(pathname) {
+  const p = pathname.replace(/\/+$/, "") || "/";
+  return p;
+}
 
 function isConfidentialitePathOnly() {
   if (typeof window === "undefined") {
@@ -32,6 +41,63 @@ function isConfidentialitePathOnly() {
 export default function AppRoot() {
   const [phase, setPhase] = useState("checking");
   const [bootNonce, setBootNonce] = useState(0);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  /** URL publique d’inscription / connexion (évite /profile dans la barre d’adresse). */
+  useEffect(() => {
+    if (phase !== "auth" || !requiresEmailAuthGate()) {
+      return;
+    }
+    const p = normalizePathname(location.pathname);
+    if (p === "/confidentialite") {
+      return;
+    }
+    if (p === AUTH_ENTRY_PATH) {
+      return;
+    }
+    try {
+      if (p !== "/") {
+        sessionStorage.setItem(
+          AUTH_REDIRECT_KEY,
+          p + (location.search || "")
+        );
+      } else {
+        sessionStorage.removeItem(AUTH_REDIRECT_KEY);
+      }
+    } catch {
+      /* ignore */
+    }
+    navigate(AUTH_ENTRY_PATH, { replace: true });
+  }, [phase, location.pathname, location.search, navigate]);
+
+  /** Après session valide : restaurer la page cible ou quitter /compte (évite conflit avec les Routes). */
+  useLayoutEffect(() => {
+    if (phase !== "ready" || !requiresEmailAuthGate()) {
+      return;
+    }
+    const p = normalizePathname(location.pathname);
+    let target;
+    try {
+      target = sessionStorage.getItem(AUTH_REDIRECT_KEY);
+      if (target) {
+        sessionStorage.removeItem(AUTH_REDIRECT_KEY);
+      }
+    } catch {
+      return;
+    }
+    if (
+      typeof target === "string" &&
+      target.startsWith("/") &&
+      !target.startsWith("//")
+    ) {
+      navigate(target, { replace: true });
+      return;
+    }
+    if (p === AUTH_ENTRY_PATH) {
+      navigate("/", { replace: true });
+    }
+  }, [phase, location.pathname, navigate]);
 
   useEffect(() => {
     let cancelled = false;
