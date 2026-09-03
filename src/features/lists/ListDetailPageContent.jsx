@@ -1,13 +1,13 @@
-import { useEffect, useMemo } from "react";
+﻿import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import StackedPageHeader from "../components/page/StackedPageHeader";
-import ChecklistPersonalizeNudge from "../components/list-detail/ChecklistPersonalizeNudge";
-import PwaInstallPrompt from "../components/list-detail/PwaInstallPrompt";
-import ChecklistProgressCard from "../components/list-detail/ChecklistProgressCard";
-import ChecklistCategoryGroups from "../components/list-detail/ChecklistCategoryGroups";
-import { useChecklistDetail } from "../hooks/useChecklistDetail";
-import { useProfile } from "../hooks/useProfile";
-import { trackAppEvent } from "../utils/appAnalytics";
+import StackedPageHeader from "../../components/page/StackedPageHeader";
+import ChecklistPersonalizeNudge from "../../components/list-detail/ChecklistPersonalizeNudge";
+import PwaInstallPrompt from "../../components/list-detail/PwaInstallPrompt";
+import ChecklistProgressCard from "../../components/list-detail/ChecklistProgressCard";
+import ChecklistCategoryGroups from "../../components/list-detail/ChecklistCategoryGroups";
+import { useChecklistDetail } from "../../hooks/useChecklistDetail";
+import { useProfile } from "../../hooks/useProfile";
+import { trackAppEvent } from "../../utils/appAnalytics";
 
 export default function ListDetailPageContent({ listId, locationSearch }) {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export default function ListDetailPageContent({ listId, locationSearch }) {
         sectionClassName="list-detail-header"
         onBack={() => navigate(-1)}
         title={listConfig.title}
-        subtitle="Avance à ton rythme et coche chaque étape au fur et à mesure."
+        subtitle="Avance Ã  ton rythme et coche chaque Ã©tape au fur et Ã  mesure."
       />
 
       <ChecklistPersonalizeNudge visible={showPersonalizeNudge} />

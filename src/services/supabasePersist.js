@@ -222,6 +222,14 @@ export async function bootstrapSupabase() {
 }
 
 let flushTimer;
+let consecutivePushFailures = 0;
+
+/** Dernière erreur de push cloud (debug / UI optionnelle). */
+let lastPushError = null;
+
+export function getLastSupabasePushError() {
+  return lastPushError;
+}
 
 export function scheduleSupabasePushAfterLocalWrite() {
   clearTimeout(flushTimer);
@@ -243,8 +251,26 @@ export function scheduleSupabasePushAfterLocalWrite() {
         return;
       }
       await upsertPayload(supabase, userId, collectPayload());
-    } catch {
-      //
+      consecutivePushFailures = 0;
+      lastPushError = null;
+    } catch (err) {
+      consecutivePushFailures += 1;
+      lastPushError = err;
+      console.warn(
+        `[BeMyBaby] Sync cloud échouée (${consecutivePushFailures}×) :`,
+        err?.message ?? err
+      );
+      if (
+        typeof window !== "undefined" &&
+        consecutivePushFailures >= 3 &&
+        consecutivePushFailures % 3 === 0
+      ) {
+        window.dispatchEvent(
+          new CustomEvent("bemybaby:sync-error", {
+            detail: { message: String(err?.message ?? err), count: consecutivePushFailures },
+          })
+        );
+      }
     }
   }, 1200);
 }

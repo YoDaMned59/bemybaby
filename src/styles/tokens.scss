@@ -1,0 +1,39 @@
+/* Charte BeMyBaby — source unique (ne pas dupliquer ailleurs). */
+:root {
+  --bg: #fff6f1;
+  --bg-soft: #fdf0ea;
+  --card: #fffdfb;
+  --card-soft: #fff8f4;
+  --border: #ead8d3;
+
+  --text-main: #3a2a33;
+  --text-soft: #725f68;
+  --text-muted: #98848d;
+
+  --primary: #8c6adf;
+  --primary-strong: #7655cf;
+  --primary-soft: #f1ebff;
+  --primary-soft-hover: #e9e0ff;
+
+  --accent: #f3a18a;
+  --accent-strong: #dd7f67;
+  --accent-soft: #fff0ea;
+  --accent-deep: #c96e57;
+
+  --success: #1f8f5f;
+
+  --shadow-soft: 0 10px 28px rgba(201, 110, 87, 0.12);
+  --shadow-card: 0 8px 20px rgba(201, 110, 87, 0.08);
+  --shadow-button: 0 10px 24px rgba(221, 127, 103, 0.22);
+
+  --radius-xl: 22px;
+  --radius-lg: 18px;
+  --radius-md: 14px;
+  --radius-sm: 12px;
+
+  --font-body: "Nunito", system-ui, -apple-system, sans-serif;
+  --font-display: "Montserrat", "Nunito", system-ui, sans-serif;
+
+  --nav-height: 78px;
+  --page-max: 640px;
+}

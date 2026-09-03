@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AppPage from "../components/page/AppPage";
-import StackedPageHeader from "../components/page/StackedPageHeader";
+import AppPage from "../../components/page/AppPage";
+import StackedPageHeader from "../../components/page/StackedPageHeader";
 import {
   APPOINTMENT_TEMPLATES,
   RDV_OFFICIAL_SOURCES,
-} from "../data/appointmentsTemplates";
-import { useAppointments } from "../hooks/useAppointments";
-import { formatRdvCountdown } from "../utils/rdvCountdown";
-import { trackAppEvent } from "../utils/appAnalytics";
+} from "../../data/appointmentsTemplates";
+import { useAppointments } from "../../hooks/useAppointments";
+import { formatRdvCountdown } from "../../utils/rdvCountdown";
+import { trackAppEvent } from "../../utils/appAnalytics";
 import "./RendezVousPage.scss";
 
 function formatLongDate(iso) {
@@ -73,19 +73,19 @@ export default function RendezVousPage() {
         sectionClassName="rdv-header"
         onBack={() => navigate(-1)}
         title="Rendez-vous"
-        subtitle="Rappels par date (stockés sur ton appareil). En cas de doute, vérifie toujours avec un professionnel de santé. Sources officielles en bas de page."
+        subtitle="Rappels par date (stockÃ©s sur ton appareil). En cas de doute, vÃ©rifie toujours avec un professionnel de santÃ©. Sources officielles en bas de page."
       />
 
       <form className="rdv-form" onSubmit={onAddCustom}>
         <h2 className="rdv-h2">Ajouter un rendez-vous</h2>
         <label className="rdv-label">
-          <span>Intitulé</span>
+          <span>IntitulÃ©</span>
           <input
             type="text"
             className="rdv-input"
             value={titleDraft}
             onChange={(e) => setTitleDraft(e.target.value)}
-            placeholder="ex. Pédiatre, PMI…"
+            placeholder="ex. PÃ©diatre, PMIâ€¦"
             autoComplete="off"
           />
         </label>
@@ -108,7 +108,7 @@ export default function RendezVousPage() {
           Mes rendez-vous
         </h2>
         {appointments.length === 0 ? (
-          <p className="rdv-empty">Aucun rendez-vous noté pour l’instant.</p>
+          <p className="rdv-empty">Aucun rendez-vous notÃ© pour lâ€™instant.</p>
         ) : (
           <ul className="rdv-appointments">
             {appointments.map((a) => (
@@ -156,7 +156,7 @@ export default function RendezVousPage() {
 
       <details className="rdv-suggestions-details">
         <summary className="rdv-suggestions-summary">
-          Suggestions (repères calendrier vaccinal, suivi…)
+          Suggestions (repÃ¨res calendrier vaccinal, suiviâ€¦)
         </summary>
         <section className="rdv-section rdv-section--nested" aria-labelledby="rdv-tpl-title">
           <h2 className="rdv-h2 rdv-visually-hidden" id="rdv-tpl-title">
@@ -222,8 +222,8 @@ export default function RendezVousPage() {
           ))}
         </ul>
         <p className="rdv-hint">
-          Le calendrier vaccinal est mis à jour : consulte le PDF le plus récent sur le site
-          du ministère de la Santé avant de noter un rendez-vous.
+          Le calendrier vaccinal est mis Ã  jour : consulte le PDF le plus rÃ©cent sur le site
+          du ministÃ¨re de la SantÃ© avant de noter un rendez-vous.
         </p>
       </footer>
     </AppPage>
