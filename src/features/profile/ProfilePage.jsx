@@ -1,10 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
-import AppPage from "../components/page/AppPage";
-import StackedPageHeader from "../components/page/StackedPageHeader";
-import ProfileValueBanner from "../components/profile/ProfileValueBanner";
-import ProfileForm from "../components/profile/ProfileForm";
-import ProfileEmailAuth from "../components/profile/ProfileEmailAuth";
-import { useProfileForm } from "../hooks/useProfileForm";
+﻿import { Link, useNavigate } from "react-router-dom";
+import AppPage from "../../components/page/AppPage";
+import StackedPageHeader from "../../components/page/StackedPageHeader";
+import ProfileValueBanner from "../../components/profile/ProfileValueBanner";
+import ProfileForm from "../../components/profile/ProfileForm";
+import ProfileEmailAuth from "../../components/profile/ProfileEmailAuth";
+import { useProfileForm } from "../../hooks/useProfileForm";
 import "./ProfilePage.scss";
 
 export default function ProfilePage() {
@@ -32,7 +32,7 @@ export default function ProfilePage() {
       <ProfileEmailAuth />
 
       <p className="profile-footer-privacy-link">
-        <Link to="/confidentialite">Confidentialité et mesure d’audience</Link>
+        <Link to="/confidentialite">ConfidentialitÃ© et mesure dâ€™audience</Link>
       </p>
     </AppPage>
   );

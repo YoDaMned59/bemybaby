@@ -37,3 +37,9 @@ android/captures
 android/.idea
 *.jks
 *.keystore
+*.p12
+# Clé d’upload Play / Android Studio (souvent sans extension)
+bemybaby-upload-key
+bemybaby-upload-key.*
+*-upload-key
+*-upload-key.*

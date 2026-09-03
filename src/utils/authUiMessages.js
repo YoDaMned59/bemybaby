@@ -1,4 +1,4 @@
-export const AUTH_MIN_PASSWORD = 6;
+export const AUTH_MIN_PASSWORD = 8;
 
 export function mapAuthErrorMessage(message) {
   const m = typeof message === "string" ? message.toLowerCase() : "";

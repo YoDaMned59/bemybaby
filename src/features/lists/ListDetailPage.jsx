@@ -1,8 +1,8 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import AppPage from "../components/page/AppPage";
-import ListDetailNotFound from "../components/list-detail/ListDetailNotFound";
+﻿import { useLocation, useNavigate, useParams } from "react-router-dom";
+import AppPage from "../../components/page/AppPage";
+import ListDetailNotFound from "../../components/list-detail/ListDetailNotFound";
 import ListDetailPageContent from "./ListDetailPageContent";
-import { getChecklistById } from "../data/checklistsConfig";
+import { getChecklistById } from "../../data/checklistsConfig";
 import "./ListDetailPage.scss";
 
 export default function ListDetailPage() {
